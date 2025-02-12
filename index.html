@@ -1,1 +1,343 @@
-"Hello world" 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        nav h1{
+            align-items: right;
+            margin-right: 30%;
+        }
+        nav button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        section {
+            position: absolute;
+            width: 60vw;
+            height: 55vh;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+            transform: scale(0.9);
+        }
+
+        section.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        section h2 {
+            margin: 0 0 2rem 0;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        section p {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 80%;
+        }
+
+        .indicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background-color: #333;
+            transform: scale(1.5);
+        }
+
+        @media (max-width: 768px) {
+            section h2 {
+                font-size: 2.5rem;
+            }
+            
+            section p {
+                font-size: 1.5rem;
+            }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            z-index: 1000;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 0.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .github:hover {
+            color: #6e5494;
+        }
+
+        .kaggle:hover {
+            color: #20beff;
+        }
+
+        .huggingface:hover {
+            color: #ffac2f;
+        }
+
+        .freecodecamp:hover {
+            color: #ffac2f;
+        }
+
+        .hackerrank:hover {
+            color: #2ec866;
+        }
+
+        .linkedin:hover {
+            color: #20beff;
+        }
+
+        main {
+            padding-bottom: 80px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            
+        }
+
+        .fa-hugging-face::before {
+            content: "🤗";
+            font-size: 1.8rem;
+        }
+    </style>
+    <script>
+        const translations = {
+            es: {
+                webDev: "Desarrollo Web",
+                webDevContent: "He trabajado con tecnologías como HTML, CSS y JavaScript. He realizado proyectos privados con Flask, React, Node y Angular.",
+                softwareDev: "Desarrollo de Software",
+                softwareDevContent: "He creado bases de datos utilizando bases de datos no relacionales como Mongo y bases de datos relacionales como SQL Server y Postgres.",
+                machineLearning: "Aprendizaje Automático",
+                machineLearningContent: "He realizado muchas certificaciones en Kaggle y Hugging Face, llevando a cabo proyectos como predicción de ventas de viviendas con entrenamiento supervisado y proyectos de entrenamiento no supervisado como agentes en videojuegos 2D, usando PyTorch para ambos tipos de proyectos."
+            },
+            en: {
+                webDev: "Web Development",
+                webDevContent: "I have worked with technologies like HTML, CSS, and JavaScript. I have done private projects with Flask, React, Node, and Angular.",
+                softwareDev: "Software Development",
+                softwareDevContent: "I have created databases using non-relational databases like Mongo and relational databases like SQL Server and Postgres.",
+                machineLearning: "Machine Learning",
+                machineLearningContent: "I have done many certifications from Kaggle and Hugging Face, realizing projects like housing sales prediction with supervised training and unsupervised training projects like agents in 2D video games, using PyTorch for both types of projects."
+            },
+            fr: {
+                webDev: "Développement Web",
+                webDevContent: "J'ai travaillé avec des technologies comme HTML, CSS et JavaScript. J'ai réalisé des projets privés avec Flask, React, Node et Angular.",
+                softwareDev: "Développement Logiciel",
+                softwareDevContent: "J'ai créé des bases de données en utilisant des bases de données non relationnelles comme Mongo et des bases de données relationnelles comme SQL Server et Postgres.",
+                machineLearning: "Apprentissage Automatique",
+                machineLearningContent: "J'ai suivi de nombreuses certifications sur Kaggle et Hugging Face, réalisant des projets comme la prédiction des ventes de logements avec un apprentissage supervisé et des projets d'apprentissage non supervisé comme des agents dans des jeux vidéo 2D, en utilisant PyTorch pour les deux types de projets."
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('webDevTitle').textContent = translations[lang].webDev;
+            document.getElementById('webDevContent').textContent = translations[lang].webDevContent;
+            document.getElementById('softwareDevTitle').textContent = translations[lang].softwareDev;
+            document.getElementById('softwareDevContent').textContent = translations[lang].softwareDevContent;
+            document.getElementById('machineLearningTitle').textContent = translations[lang].machineLearning;
+            document.getElementById('machineLearningContent').textContent = translations[lang].machineLearningContent;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage('es'); // Default language
+            
+            const sections = document.querySelectorAll('section');
+            const dots = document.querySelectorAll('.indicator-dot');
+            let currentSection = 0;
+            let isScrolling = false;
+            let scrollTimeout;
+
+            function showSection(index) {
+                sections.forEach((section, i) => {
+                    section.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            function handleScroll(event) {
+                if (isScrolling) return;
+                
+                isScrolling = true;
+                clearTimeout(scrollTimeout);
+                
+                if (event.deltaY > 0 && currentSection < sections.length - 1) {
+                    currentSection++;
+                } else if (event.deltaY < 0 && currentSection > 0) {
+                    currentSection--;
+                }
+                
+                showSection(currentSection);
+                
+                scrollTimeout = setTimeout(() => {
+                    isScrolling = false;
+                }, 800); // Debounce scroll events
+            }
+
+            // Initialize first section
+            showSection(0);
+
+            // Add wheel event listener
+            window.addEventListener('wheel', handleScroll, { passive: true });
+            
+            // Add click events to indicator dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSection = index;
+                    showSection(currentSection);
+                });
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if ((e.key === 'ArrowDown' || e.key === 'ArrowRight') && currentSection < sections.length - 1) {
+                    currentSection++;
+                    showSection(currentSection);
+                } else if ((e.key === 'ArrowUp' || e.key === 'ArrowLeft') && currentSection > 0) {
+                    currentSection--;
+                    showSection(currentSection);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        
+        <nav>
+            <h1>Portfolio Leonel Hernandez Aguirre</h1>
+            <button onclick="changeLanguage('es')">Español</button>
+            <button onclick="changeLanguage('en')">English</button>
+            <button onclick="changeLanguage('fr')">Français</button>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2 id="webDevTitle"></h2>
+            <p id="webDevContent"></p>
+        </section>
+        <section>
+            <h2 id="softwareDevTitle"></h2>
+            <p id="softwareDevContent"></p>
+        </section>
+        <section>
+            <h2 id="machineLearningTitle"></h2>
+            <p id="machineLearningContent"></p>
+        </section>
+        <div class="indicator">
+            <div class="indicator-dot active"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+        </div>
+    </main>
+    <footer>
+        <!--<div class="footer-icons">
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=13930&format=png&color=000000" alt="LinkedIn Icon"></a>
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=62856&format=png&color=000000" alt="GitHub Icon"></a>
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=HSqTN92Y0X51&format=png&color=000000" alt="HackerRank Icon"></a>
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=s1rM4KTx2Huf&format=png&color=000000" alt="Kaggle Icon"></a>
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=sop9ROXku5bb&format=png&color=000000" alt="Hugging Face"></a>
+
+        
+        </div> lin-->
+        <a href="https://www.linkedin.com/in/leonel-aguirre/" class="social-icon linkedin" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=13930&format=png&color=000000" alt="LinkedIn Icon">
+        </a>
+        <a href="https://github.com/LAguirr" class="social-icon github" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=62856&format=png&color=000000" alt="GitHub Icon">
+        </a>
+        <a href="https://www.kaggle.com/megalino111" class="social-icon kaggle" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=s1rM4KTx2Huf&format=png&color=000000" alt="Kaggle Icon">
+        </a>
+        <a href="https://huggingface.co/Megalino111" class="social-icon huggingface" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=sop9ROXku5bb&format=png&color=000000" alt="Hugging Face">
+        </a>
+        <a href="https://www.hackerrank.com/profile/lino_hdz28" class="social-icon hackerrank" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=HSqTN92Y0X51&format=png&color=000000" alt="HackerRank Icon">
+        </a>
+        <a href="https://www.freecodecamp.org/fcc678f070c-68ed-46b2-8997-c460e0ec6b0a" class="social-icon freecodecamp" target="_blank">
+            <img src="https://img.icons8.com/?size=60&id=xJPRtmP13YmK&format=png&color=000000" alt="HackerRank Icon">
+        </a>
+    </footer>
+</body>
+</html>
