@@ -27,10 +27,26 @@
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 300% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .project-card:hover {
@@ -153,15 +169,44 @@
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-height {
+            height: 5rem;
+            transition: height 0.3s ease;
+        }
+
+        .glass-nav.scrolled .nav-height {
+            height: 4rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .nav-enter {
+            animation: slideDown 1s ease-out forwards;
         }
     </style>
 </head>
 
 <body class="animated-bg font-sans">
     <!-- Navigation -->
-    <nav class="fixed w-full glass-nav shadow-sm z-50 transition-all duration-300">
+    <nav id="main-nav" class="fixed w-full glass-nav shadow-sm z-50 transition-all duration-300 nav-enter">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between items-center nav-height">
                 <div class="flex items-center group cursor-pointer">
                     <span
                         class="text-xl font-bold gradient-text transform group-hover:scale-105 transition duration-300">DATA
@@ -175,13 +220,12 @@
                     <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
                 </div>
                 <div class="md:hidden flex items-center">
-                    <button id="menu-btn" class="text-gray-700">
+                    <button id="menu-btn" class="text-gray-700 transition-transform duration-300">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile menu -->
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-nav pb-4 px-4 shadow-lg border-t border-gray-200/30">
             <a href="#home"
@@ -202,10 +246,10 @@
         class="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <!-- Background Shapes -->
         <div
-            class="hero-bg-shape bg-blue-200 w-72 h-72 top-10 left-10 mixt-blend-multiply filter blur-2xl opacity-70 animate-blob">
+            class="hero-bg-shape bg-blue-200 w-72 h-72 top-10 left-10 mix-blend-multiply filter blur-2xl opacity-70 animate-blob">
         </div>
         <div
-            class="hero-bg-shape bg-purple-200 w-72 h-72 bottom-10 right-10 mixt-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000">
+            class="hero-bg-shape bg-purple-200 w-72 h-72 bottom-10 right-10 mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000">
         </div>
 
         <div class="flex flex-col md:flex-row items-center content-relative">
@@ -659,7 +703,20 @@
         // Mobile menu toggle
         document.getElementById('menu-btn').addEventListener('click', function () {
             const menu = document.getElementById('mobile-menu');
+            const icon = this.querySelector('i');
+
             menu.classList.toggle('hidden');
+
+            // Toggle icon and rotate
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                this.classList.remove('rotate-90');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                this.classList.add('rotate-90');
+            }
         });
 
         // Smooth scrolling for navigation links
@@ -748,6 +805,16 @@
 
         document.querySelectorAll('.fade-in-section').forEach(section => {
             fadeObserver.observe(section);
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 
