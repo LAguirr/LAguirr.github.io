@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,45 +9,170 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
+
         .floating {
             animation: float 6s ease-in-out infinite;
         }
+
         .gradient-text {
             background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+
         .project-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+
         .skill-bar {
             transition: width 1.5s ease-in-out;
         }
-            #rotating-image {
-        transition: opacity 1s ease-in-out;
+
+        #rotating-image {
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* New Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Background Animations */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animated-bg {
+            background: linear-gradient(-45deg, #f8fafc, #e0e7ff, #f3e8ff, #ecfeff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .hero-bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            z-index: 0;
+            animation: float-shape 20s infinite linear;
+        }
+
+        @keyframes float-shape {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -50px) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .content-relative {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar Improvements */
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
+
+<body class="animated-bg font-sans">
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white shadow-sm z-50">
+    <nav class="fixed w-full glass-nav shadow-sm z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-xl font-bold gradient-text">DATA & AI</span>
+                <div class="flex items-center group cursor-pointer">
+                    <span
+                        class="text-xl font-bold gradient-text transform group-hover:scale-105 transition duration-300">DATA
+                        & AI</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition">Home</a>
-                    <a href="#about" class="text-gray-700 hover:text-blue-600 transition">About</a>
-                    <a href="#skills" class="text-gray-700 hover:text-blue-600 transition">Skills</a>
-                    <a href="#projects" class="text-gray-700 hover:text-blue-600 transition">Projects</a>
-                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                    <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="#skills" class="nav-link text-gray-700 hover:text-blue-600 transition">Skills</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="menu-btn" class="text-gray-700">
@@ -66,21 +192,41 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">Leonel Hernandez Aguirre</span></h1>
+    <section id="home"
+        class="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Background Shapes -->
+        <div
+            class="hero-bg-shape bg-blue-200 w-72 h-72 top-10 left-10 mixt-blend-multiply filter blur-2xl opacity-70 animate-blob">
+        </div>
+        <div
+            class="hero-bg-shape bg-purple-200 w-72 h-72 bottom-10 right-10 mixt-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000">
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center content-relative">
+            <div class="md:w-1/2 mb-10 md:mb-0 fade-in-section">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">Leonel Hernandez
+                        Aguirre</span></h1>
                 <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700">Data & AI Engineering</h2>
-                <p class="text-lg text-gray-600 mb-8">Master's student in Data & Artificial Intelligence with 8+ years of IT experience. Specializing in Python automation, machine learning, and network systems.</p>
+                <p class="text-lg text-gray-600 mb-8">Master's student in Data & Artificial Intelligence with 8+ years
+                    of IT experience. Specializing in Python automation, machine learning, and network systems.</p>
                 <div class="flex space-x-4">
-                    <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">View Work</a>
-                    <a href="#contact" class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition">Contact Me</a>
+                    <a href="#projects"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">View
+                        Work</a>
+                    <a href="#contact"
+                        class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition pulse-animation">Contact
+                        Me</a>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
                 <div class="relative w-64 h-64 md:w-80 md:h-80">
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-xl opacity-30"></div>
-                    <img id="rotating-image" src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="AI Engineer" class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-lg floating">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-xl opacity-30">
+                    </div>
+                    <img id="rotating-image"
+                        src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="AI Engineer"
+                        class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-lg floating">
                 </div>
             </div>
         </div>
@@ -90,16 +236,21 @@
     <section id="about" class="py-16 bg-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center mb-12 gradient-text">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center">
+            <div class="flex flex-col md:flex-row items-center fade-in-section">
                 <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
                     <div class="bg-white p-4 rounded-xl shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="About AI" class="w-64 h-64 object-cover rounded-lg">
+                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                            alt="About AI" class="w-64 h-64 object-cover rounded-lg">
                     </div>
                 </div>
                 <div class="md:w-2/3 md:pl-12">
                     <h3 class="text-2xl font-semibold mb-4 text-gray-800">Bridging IT Experience with AI Innovation</h3>
-                    <p class="text-gray-600 mb-4">With 8+ years in IT and network systems, I'm now pursuing a Master's in Data & AI at Université Catholique de Lille. My goal is to combine my technical background with cutting-edge AI skills.</p>
-                    <p class="text-gray-600 mb-6">I hold a Systems Engineering degree from Universidad Autónoma de Nuevo León (Mexico) and multiple AI/ML certifications including Microsoft Azure AI Fundamentals and Deep Reinforcement Learning from Hugging Face.</p>
+                    <p class="text-gray-600 mb-4">With 8+ years in IT and network systems, I'm now pursuing a Master's
+                        in Data & AI at Université Catholique de Lille. My goal is to combine my technical background
+                        with cutting-edge AI skills.</p>
+                    <p class="text-gray-600 mb-6">I hold a Systems Engineering degree from Universidad Autónoma de Nuevo
+                        León (Mexico) and multiple AI/ML certifications including Microsoft Azure AI Fundamentals and
+                        Deep Reinforcement Learning from Hugging Face.</p>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="flex items-center justify-center">
                             <div class="bg-blue-100 p-2 rounded-full mr-3">
@@ -135,7 +286,7 @@
     <section id="skills" class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Technical Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-section">
                 <div>
                     <h3 class="text-xl font-semibold mb-6 text-gray-800">Machine Learning</h3>
                     <div class="space-y-4">
@@ -263,11 +414,12 @@
     <section id="projects" class="py-16 bg-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-section">
                 <!-- Project 1 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80" alt="SPACEGYM" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80"
+                            alt="SPACEGYM" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center mb-2">
@@ -276,23 +428,26 @@
                             </div>
                             <h3 class="text-xl font-semibold">SPACEGYM</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">User registration system for gym management with MongoDB backend and Flask frontend.</p>
+                        <p class="text-gray-600 mb-4">User registration system for gym management with MongoDB backend
+                            and Flask frontend.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Python</span>
                             <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">MongoDB</span>
                             <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Flask</span>
                             <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">JavaScript</span>
                         </div>
-                        <a href="https://github.com/LAguirr/gymspace" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <a href="https://github.com/LAguirr/gymspace" target="_blank"
+                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                             View on GitHub <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
                 </div>
-                
+
                 <!-- Project 2 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="FLASKMERAKI" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                            alt="FLASKMERAKI" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center mb-2">
@@ -301,14 +456,16 @@
                             </div>
                             <h3 class="text-xl font-semibold">FLASKMERAKI</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">Meraki network device visualization application using Flask and Meraki Cloud API.</p>
+                        <p class="text-gray-600 mb-4">Meraki network device visualization application using Flask and
+                            Meraki Cloud API.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Python</span>
                             <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">Flask</span>
                             <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Meraki API</span>
                             <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Templates</span>
                         </div>
-                        <a href="https://github.com/LAguirr/flaskmeraki" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <a href="https://github.com/LAguirr/flaskmeraki" target="_blank"
+                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                             View on GitHub <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -316,7 +473,8 @@
                 <!-- Project 3 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://365datascience.com/resources/blog/w4ntct7turq-141-deploying-machine-learning-model-python-streamlit-1.jpg" alt="Streamlit" class="w-full h-full object-cover">
+                        <img src="https://365datascience.com/resources/blog/w4ntct7turq-141-deploying-machine-learning-model-python-streamlit-1.jpg"
+                            alt="Streamlit" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center mb-2">
@@ -325,14 +483,17 @@
                             </div>
                             <h3 class="text-xl font-semibold">Streamlit model creator</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">This Streamlit application provides an interactive web interface for an easy understanding and tool for data cleaning. Users can upload datasets, then clean the data, and train his model to download it and use it.</p>
+                        <p class="text-gray-600 mb-4">This Streamlit application provides an interactive web interface
+                            for an easy understanding and tool for data cleaning. Users can upload datasets, then clean
+                            the data, and train his model to download it and use it.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Python</span>
                             <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">Streamlit</span>
                             <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">SkLearn</span>
                             <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Pandas</span>
                         </div>
-                        <a href="https://github.com/LAguirr/streamlit" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <a href="https://github.com/LAguirr/streamlit" target="_blank"
+                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                             View on GitHub <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -340,7 +501,8 @@
                 <!-- Project 4 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://commodity-board.com/wordpress/wp-content/uploads/2025/05/682d70f212367-820x410.jpg" alt="Streamlit" class="w-full h-full object-cover">
+                        <img src="https://commodity-board.com/wordpress/wp-content/uploads/2025/05/682d70f212367-820x410.jpg"
+                            alt="Streamlit" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center mb-2">
@@ -349,36 +511,44 @@
                             </div>
                             <h3 class="text-xl font-semibold">Soya market decision</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">A proyect that recolect data like costs, historic prizes, macroeconomics data to build a model using XGBoost, Risks analisys, ARIMA, LSTM to predict prizes, profitability, risks and recomendations.</p>
+                        <p class="text-gray-600 mb-4">A proyect that recolect data like costs, historic prizes,
+                            macroeconomics data to build a model using XGBoost, Risks analisys, ARIMA, LSTM to predict
+                            prizes, profitability, risks and recomendations.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Data Analytics</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Data
+                                Analytics</span>
                             <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">Machine Learning</span>
-                            <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Data Visualisation</span>
+                            <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Data
+                                Visualisation</span>
                         </div>
-                        <a href="https://github.com/LAguirr" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <a href="https://github.com/LAguirr" target="_blank"
+                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                             Working on it . . . <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center mt-12">
-                <a href="https://www.kaggle.com/megalino111" target="_blank" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition">
+                <a href="https://www.kaggle.com/megalino111" target="_blank"
+                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition">
                     View All Projects <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    
+
     <!-- Contact Section -->
     <section id="contact" class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Get In Touch</h2>
-            <div class="flex flex-col items-center justify-center">
+            <div class="flex flex-col items-center justify-center fade-in-section">
                 <div class="w-full md:w-2/3 lg:w-1/2 text-center mx-auto">
                     <h3 class="text-2xl font-semibold mb-6 text-gray-800">Let's Collaborate</h3>
-                    <p class="text-gray-600 mb-8">I'm currently available for freelance work, consulting, or full-time positions. If you have a project that needs AI expertise or just want to say hi, feel free to reach out!</p>
+                    <p class="text-gray-600 mb-8">I'm currently available for freelance work, consulting, or full-time
+                        positions. If you have a project that needs AI expertise or just want to say hi, feel free to
+                        reach out!</p>
                     <div class="space-y-4 flex flex-col items-center">
                         <div class="flex items-center">
                             <div class="bg-blue-100 p-3 rounded-full mr-4">
@@ -386,7 +556,8 @@
                             </div>
                             <div>
                                 <h4 class="font-medium text-gray-700">Email</h4>
-                                <a href="mailto:lino_hdz28@hotmail.com" class="text-blue-600 hover:text-blue-800">lino_hdz@hotmail.com</a>
+                                <a href="mailto:lino_hdz28@hotmail.com"
+                                    class="text-blue-600 hover:text-blue-800">lino_hdz@hotmail.com</a>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -395,7 +566,8 @@
                             </div>
                             <div>
                                 <h4 class="font-medium text-gray-700">Phone</h4>
-                                <a href="tel:+33 06 78 53 74 02" class="text-blue-600 hover:text-blue-800">+33 00 Let's for a coffe</a>
+                                <a href="tel:+33 06 78 53 74 02" class="text-blue-600 hover:text-blue-800">+33 00 Let's
+                                    for a coffe</a>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -411,25 +583,31 @@
                     <div class="mt-8 text-center">
                         <h4 class="font-medium text-gray-700 mb-4">Connect With Me</h4>
                         <div class="flex justify-center items-center">
-                            <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
+                            <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
                                 <i class="fab fa-linkedin-in text-blue-700"></i>
                             </a>
-                            <a href="https://github.com/LAguirr" target="_blank" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
+                            <a href="https://github.com/LAguirr" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
                                 <i class="fab fa-github text-gray-800"></i>
                             </a>
-                            <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
+                            <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
                                 <i class="fab fa-hackerrank text-green-600"></i>
                             </a>
-                            <a href="https://www.kaggle.com/megalino111" target="_blank" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
+                            <a href="https://www.kaggle.com/megalino111" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
                                 <i class="fab fa-kaggle text-blue-600"></i>
                             </a>
-                            <a href="https://huggingface.co/Megalino111" target="_blank" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <img src ="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg" class="fas fa-robot text-yellow-600" style="width: 28px; height: 28px;"></img>
+                            <a href="https://huggingface.co/Megalino111" target="_blank"
+                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
+                                <img src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg"
+                                    class="fas fa-robot text-yellow-600" style="width: 28px; height: 28px;"></img>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </section>
@@ -443,19 +621,24 @@
                     <p class="text-gray-400 mt-2">Let's build the future with artificial intelligence.</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://github.com/LAguirr" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://github.com/LAguirr" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <i class="fab fa-hackerrank"></i>
                     </a>
-                    <a href="https://www.kaggle.com/megalino111" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://www.kaggle.com/megalino111" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <i class="fab fa-kaggle"></i>
                     </a>
-                    <a href="https://huggingface.co/Megalino111" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://huggingface.co/Megalino111" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <i class="fas fa-robot"></i>
                     </a>
                 </div>
@@ -468,7 +651,7 @@
 
     <script>
         // Mobile menu toggle
-        document.getElementById('menu-btn').addEventListener('click', function() {
+        document.getElementById('menu-btn').addEventListener('click', function () {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
@@ -477,15 +660,15 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     // Close mobile menu if open
                     const mobileMenu = document.getElementById('mobile-menu');
                     mobileMenu.classList.add('hidden');
-                    
+
                     // Scroll to target
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
@@ -497,7 +680,7 @@
 
         // Animate skill bars when they come into view
         const skillBars = document.querySelectorAll('.skill-bar');
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -514,38 +697,52 @@
             observer.observe(bar);
         });
 
-          // Array of image URLs
-    const images = [
-        "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq2biqwsb4H5fM9i0CfEW-l9cVLCy8-4CI0Q&s",
-        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=880&q=80",
-        "https://www.univ-catholille.fr/wp-content/uploads/2024/04/Embleme-seul-full-color-CMJN-1536x1499.png",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbQyrfj9hlZqh7eylmstOWXJW8swPGHndprQ&s",
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=880&q=80",
-        "https://t3.ftcdn.net/jpg/00/62/49/94/360_F_62499420_ICXknV3RpaDN1pFfjD1q9imLi7COrmP0.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/2560px-Flag_of_Mexico.svg.png"
-    ];
+        // Array of image URLs
+        const images = [
+            "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq2biqwsb4H5fM9i0CfEW-l9cVLCy8-4CI0Q&s",
+            "https://www.univ-catholille.fr/wp-content/uploads/2024/04/Embleme-seul-full-color-CMJN-1536x1499.png",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbQyrfj9hlZqh7eylmstOWXJW8swPGHndprQ&s",
+            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=880&q=80",
+            "https://t3.ftcdn.net/jpg/00/62/49/94/360_F_62499420_ICXknV3RpaDN1pFfjD1q9imLi7COrmP0.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/2560px-Flag_of_Mexico.svg.png"
+        ];
 
-    let currentIndex = 0;
-    const imageElement = document.getElementById('rotating-image');
+        let currentIndex = 0;
+        const imageElement = document.getElementById('rotating-image');
 
-    function changeImage() {
-        // Fade out
-        imageElement.style.opacity = '0';
-        imageElement.style.backgroundColor = 'black';
-        
-        setTimeout(() => {
-            currentIndex = (currentIndex + 1) % images.length;
-            imageElement.src = images[currentIndex];
-            
-            // Fade in
+        function changeImage() {
+            // Fade out
+            imageElement.style.opacity = '0';
+            imageElement.style.backgroundColor = 'black';
+
             setTimeout(() => {
-                imageElement.style.opacity = '1';
-            }, 50);
-        }, 800);
-    }
+                currentIndex = (currentIndex + 1) % images.length;
+                imageElement.src = images[currentIndex];
 
-    // Change image every 5 seconds
-    setInterval(changeImage, 3000);
+                // Fade in
+                setTimeout(() => {
+                    imageElement.style.opacity = '1';
+                }, 50);
+            }, 800);
+        }
+
+        // Change image every 5 seconds
+        setInterval(changeImage, 3000);
+
+        // Fade-in on scroll observer
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            fadeObserver.observe(section);
+        });
     </script>
+
 </html>
