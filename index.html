@@ -554,7 +554,7 @@
                         <img src="https://www.radioclassique.fr/wp-content/thumbnails/uploads/2024/03/decathlon-logo-v2-13-03-2024-tt-width-978-height-383-crop-1-bgcolor-ffffff.jpg"
                             alt="Decacouch" class="w-full object-cover">
                     </div>
-                    
+
                     <div class="p-6">
                         <div class="flex items-center mb-2">
                             <div class="bg-blue-100 p-2 rounded-full mr-3">
@@ -697,6 +697,40 @@
             </div>
         </div>
     </footer>
+
+    <!-- Engagement Timer & Overlay -->
+    <div id="engagement-timer"
+        class="fixed bottom-6 right-6 z-50 bg-white rounded-full shadow-lg p-1 cursor-pointer transition-transform hover:scale-105"
+        style="display: none;">
+        <div class="relative w-16 h-16 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="transparent" />
+                <circle id="timer-progress" cx="32" cy="32" r="28" stroke="#2563eb" stroke-width="4" fill="transparent"
+                    class="transition-all duration-1000 ease-linear" stroke-dasharray="175.93" stroke-dashoffset="0"
+                    stroke-linecap="round" />
+            </svg>
+            <span id="timer-text" class="absolute text-sm font-bold text-gray-700">60</span>
+        </div>
+    </div>
+
+    <div id="engagement-overlay"
+        class="fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000">
+        <div class="max-w-2xl px-6 text-center text-white transform translate-y-4 transition-transform duration-1000"
+            id="engagement-message">
+            <div class="mb-6">
+                <i class="fas fa-eye text-5xl text-blue-400 mb-4"></i>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Thanks for watching!</h2>
+            </div>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                If you watched for more than a minute, it's because you're interested. We can continue the conversation
+                via email:
+            </p>
+            <a href="mailto:lino_hdz28@hotmail.com"
+                class="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 text-lg shadow-lg hover:shadow-blue-500/50">
+                lino_hdz28@hotmail.com
+            </a>
+        </div>
+    </div>
 
     <script>
         // Mobile menu toggle
@@ -935,6 +969,69 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Engagement Timer Logic
+        const initEngagementTimer = () => {
+            const timerContainer = document.getElementById('engagement-timer');
+            const progressCircle = document.getElementById('timer-progress');
+            const timerText = document.getElementById('timer-text');
+            const overlay = document.getElementById('engagement-overlay');
+            const message = document.getElementById('engagement-message');
+
+            // Show timer
+            if (timerContainer) {
+                timerContainer.style.display = 'block';
+                // Trigger reflow to ensure transition if needed, though 'block' is immediate
+            }
+
+            let timeLeft = 60;
+            const totalTime = 60;
+            const radius = 28;
+            const circumference = 2 * Math.PI * radius;
+
+            if (progressCircle) {
+                progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+                progressCircle.style.strokeDashoffset = 0;
+            }
+
+            const timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    if (timerText) timerText.textContent = timeLeft;
+
+                    if (progressCircle) {
+                        const offset = circumference - (timeLeft / totalTime) * circumference;
+                        progressCircle.style.strokeDashoffset = offset;
+                    }
+                } else {
+                    clearInterval(timerInterval);
+                    finishEngagement();
+                }
+            }, 1000);
+
+            function finishEngagement() {
+                if (!overlay || !message) return;
+
+                // Show overlay
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+
+                // Animate message
+                setTimeout(() => {
+                    message.classList.remove('translate-y-4');
+                }, 100);
+
+                // Disable scrolling
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        // Start timer when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initEngagementTimer);
+        } else {
+            initEngagementTimer();
+        }
     </script>
 
 </html>
