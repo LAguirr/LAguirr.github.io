@@ -200,6 +200,33 @@
         .nav-enter {
             animation: slideDown 1s ease-out forwards;
         }
+
+        /* Parallax Background Elements */
+        .parallax-bg {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.03);
+            line-height: 1;
+        }
+
+        #about {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image-container {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        .about-content-container {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
     </style>
 </head>
 
@@ -284,16 +311,24 @@
 
     <!-- About Section -->
     <section id="about" class="py-16 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Parallax Background Elements -->
+        <div id="parallax-text-1" class="parallax-bg text-8xl md:text-[12rem] top-10 right-0 opacity-5">ENGINEERING
+        </div>
+        <div id="parallax-text-2" class="parallax-bg text-7xl md:text-[8rem] bottom-10 left-0 opacity-3">INNOVATION
+        </div>
+        <div id="parallax-shape-1"
+            class="parallax-bg w-64 h-64 border-8 border-blue-500/5 rounded-full -top-10 -left-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-3xl font-bold text-center mb-12 gradient-text">About Me</h2>
             <div class="flex flex-col md:flex-row items-center fade-in-section">
-                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center about-image-container">
                     <div class="bg-white p-4 rounded-xl shadow-lg">
                         <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
                             alt="About AI" class="w-64 h-64 object-cover rounded-lg">
                     </div>
                 </div>
-                <div class="md:w-2/3 md:pl-12">
+                <div class="md:w-2/3 md:pl-12 about-content-container">
                     <h3 class="text-2xl font-semibold mb-4 text-gray-800">Bridging IT Experience with AI Innovation</h3>
                     <p class="text-gray-600 mb-4">With 8+ years in IT and network systems, I'm now pursuing a Master's
                         in Data & AI at Université Catholique de Lille. My goal is to combine my technical background
@@ -302,19 +337,19 @@
                         León (Mexico) and multiple AI/ML certifications including Microsoft Azure AI Fundamentals and
                         Deep Reinforcement Learning from Hugging Face.</p>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center justify-center">
+                        <div class="flex items-center">
                             <div class="bg-blue-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-microchip text-blue-600"></i>
                             </div>
                             <span class="text-gray-700">Deep Learning</span>
                         </div>
-                        <div class="flex items-center justify-center">
+                        <div class="flex items-center">
                             <div class="bg-purple-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-robot text-purple-600"></i>
                             </div>
                             <span class="text-gray-700">Computer Vision</span>
                         </div>
-                        <div class="flex items-center justify-center">
+                        <div class="flex items-center">
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-language text-green-600"></i>
                             </div>
@@ -792,7 +827,38 @@
         skillBars.forEach(bar => {
             observer.observe(bar);
         });
-        
+
+        // About Section Scroll Parallax (Right to Left)
+        const aboutSect = document.getElementById('about');
+        const imgCont = document.querySelector('.about-image-container');
+        const textCont = document.querySelector('.about-content-container');
+        const bgText1 = document.getElementById('parallax-text-1');
+        const bgText2 = document.getElementById('parallax-text-2');
+        const bgShape1 = document.getElementById('parallax-shape-1');
+
+        window.addEventListener('scroll', () => {
+            const rect = aboutSect.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight && rect.bottom > 0) {
+                // Calculate position relative to viewport (0 = top entry, 1 = exit bottom)
+                const scrollPercent = (windowHeight - rect.top) / (windowHeight + rect.height);
+
+                // Base movement: move from positive (right) to negative (left)
+                // Range from approx 100px to -100px
+                const movement = 150 - (scrollPercent * 300);
+
+                // Apply to different elements at different speeds
+                if (imgCont) imgCont.style.transform = `translateX(${movement * 0.8}px)`;
+                if (textCont) textCont.style.transform = `translateX(${movement * 0.4}px)`;
+
+                // Background elements move much faster or slower
+                if (bgText1) bgText1.style.transform = `translateX(${movement * 2.5}px)`;
+                if (bgText2) bgText2.style.transform = `translateX(${movement * -1.5}px)`; // Some move opposite for effect
+                if (bgShape1) bgShape1.style.transform = `translate(${movement * 1.2}px, ${movement * 0.5}px)`;
+            }
+        });
+
 
         // Array of image URLs
         const images = [
