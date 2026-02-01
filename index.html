@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Vidaloka&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -68,7 +68,12 @@
         }
 
         body.night-theme h1,
-        body.night-theme h2,
+        body.night-theme h2 {
+            font-family: 'Vidaloka', serif;
+            font-style: italic;
+            color: #e4e4e7;
+        }
+
         body.night-theme h3,
         body.night-theme h4,
         body.night-theme h5,
@@ -127,6 +132,11 @@
             color: #71717a;
         }
 
+        body.night-theme .group:hover .text-xl.font-bold {
+            color: #34d399 !important;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+
         /* Subtle Red Accents */
         body.night-theme .project-card:hover {
             box-shadow: 0 0 15px rgba(127, 29, 29, 0.15);
@@ -172,11 +182,64 @@
             box-shadow: 0 0 8px rgba(127, 29, 29, 0.2);
         }
 
-        body.night-theme .hero-bg-shape {
+        body.night-theme .hero-bg-shape:first-of-type {
             opacity: 0.05;
-            /* Barely visible in night mode */
             background-color: #7f1d1d;
             /* Red tint */
+        }
+
+        body.night-theme .hero-bg-shape:last-of-type {
+            opacity: 0.05;
+            background-color: #064e3b;
+            /* Green tint */
+        }
+
+        /* Green Accents */
+        body.night-theme ::selection {
+            background-color: #064e3b;
+            color: #ecfdf5;
+        }
+
+        /* Icons Hover Green */
+        body.night-theme .group:hover .text-zinc-400,
+        body.night-theme .group:hover i,
+        body.night-theme #skills .flex-wrap>div:hover i {
+            color: #34d399 !important;
+            /* Emerald 400 */
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
+        /* Specific Button Accents */
+        body.night-theme a[href="#contact"]:hover {
+            border-color: #065f46;
+            color: #34d399;
+            background-color: rgba(6, 95, 70, 0.1);
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.15);
+        }
+
+        body.night-theme a[href="#projects"]:hover {
+            border-color: #064e3b;
+            color: #6ee7b7;
+            background-color: rgba(6, 78, 59, 0.1);
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.1);
+        }
+
+        /* Alternate Green Skill Bars (Programming & Tools column) */
+        body.night-theme #skills .grid>div:last-child .skill-bar {
+            background-color: #065f46;
+            box-shadow: 0 0 5px rgba(6, 95, 70, 0.5);
+        }
+
+        /* Alternate Green Project Cards */
+        body.night-theme .project-card:nth-child(even):hover {
+            box-shadow: 0 0 15px rgba(5, 150, 105, 0.15);
+            border-color: rgba(5, 150, 105, 0.3);
+        }
+
+        /* Parallax text 2 Green */
+        body.night-theme #parallax-text-2 {
+            color: rgba(5, 150, 105, 0.05);
+            /* Stealth green */
         }
 
         @keyframes float {
