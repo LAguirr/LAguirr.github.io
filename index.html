@@ -47,6 +47,7 @@
             font-family: 'Inter', sans-serif;
             color: #27272a;
             background-color: #fafafa;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         h1,
@@ -57,6 +58,125 @@
         h6 {
             font-family: 'Outfit', sans-serif;
             letter-spacing: -0.025em;
+            transition: font-style 0.5s ease;
+        }
+
+        /* Night Theme Styles */
+        body.night-theme {
+            background-color: #050505;
+            color: #d4d4d8;
+        }
+
+        body.night-theme h1,
+        body.night-theme h2,
+        body.night-theme h3,
+        body.night-theme h4,
+        body.night-theme h5,
+        body.night-theme h6 {
+            font-style: italic;
+            color: #e4e4e7;
+        }
+
+        body.night-theme .glass-nav {
+            background: rgba(5, 5, 5, 0.8);
+            border-bottom: 1px solid rgba(127, 29, 29, 0.2);
+            /* Very subtle red border */
+        }
+
+        body.night-theme .glass-nav.scrolled {
+            background: rgba(5, 5, 5, 0.95);
+        }
+
+        body.night-theme .nav-link {
+            color: #a1a1aa;
+        }
+
+        body.night-theme .nav-link:hover {
+            color: #fca5a5;
+            /* Light red text hover */
+        }
+
+        body.night-theme .nav-link::after {
+            background: #7f1d1d;
+            /* Dark red underline */
+        }
+
+        body.night-theme .bg-zinc-50 {
+            background-color: #09090b;
+            /* Slightly lighter black for sections */
+        }
+
+        body.night-theme .bg-white {
+            background-color: #0a0a0a;
+        }
+
+        body.night-theme .border-zinc-200,
+        body.night-theme .border-zinc-100 {
+            border-color: #18181b;
+        }
+
+        body.night-theme .text-zinc-900 {
+            color: #f4f4f5;
+        }
+
+        body.night-theme .text-zinc-600 {
+            color: #a1a1aa;
+        }
+
+        body.night-theme .text-zinc-500 {
+            color: #71717a;
+        }
+
+        /* Subtle Red Accents */
+        body.night-theme .project-card:hover {
+            box-shadow: 0 0 15px rgba(127, 29, 29, 0.15);
+            /* Faint red glow */
+            border-color: rgba(127, 29, 29, 0.3);
+        }
+
+        body.night-theme .skill-bar {
+            background-color: #7f1d1d;
+            /* Deep red bars */
+            box-shadow: 0 0 5px rgba(127, 29, 29, 0.5);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid #e4e4e7;
+            color: #52525b;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #f4f4f5;
+            color: #18181b;
+        }
+
+        body.night-theme .theme-toggle-btn {
+            border-color: #3f3f46;
+            color: #a1a1aa;
+        }
+
+        body.night-theme .theme-toggle-btn:hover {
+            border-color: #7f1d1d;
+            color: #fca5a5;
+            background: rgba(127, 29, 29, 0.1);
+            box-shadow: 0 0 8px rgba(127, 29, 29, 0.2);
+        }
+
+        body.night-theme .hero-bg-shape {
+            opacity: 0.05;
+            /* Barely visible in night mode */
+            background-color: #7f1d1d;
+            /* Red tint */
         }
 
         @keyframes float {
@@ -155,6 +275,31 @@
         .content-relative {
             position: relative;
             z-index: 1;
+        }
+
+        .theme-toggle-nav {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #52525b;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-nav:hover {
+            color: #18181b;
+            transform: scale(1.1);
+        }
+
+        body.night-theme .theme-toggle-nav {
+            color: #a1a1aa;
+        }
+
+        body.night-theme .theme-toggle-nav:hover {
+            color: #fca5a5;
         }
 
         /* Minimalist Navbar */
@@ -261,6 +406,9 @@
                     <a href="#skills" class="nav-link text-sm uppercase tracking-widest">Skills</a>
                     <a href="#projects" class="nav-link text-sm uppercase tracking-widest">Projects</a>
                     <a href="#contact" class="nav-link text-sm uppercase tracking-widest">Contact</a>
+                    <button id="theme-toggle" class="theme-toggle-nav" aria-label="Toggle Night Theme">
+                        <i class="fas fa-moon text-lg"></i>
+                    </button>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="menu-btn" class="text-zinc-800 transition-transform duration-300">
@@ -1071,6 +1219,23 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Night Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('night-theme');
+            const icon = themeBtn.querySelector('i');
+
+            if (bodyElement.classList.contains('night-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         });
 
