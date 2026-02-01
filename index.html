@@ -1,21 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Engineer Portfolio</title>
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/4/4a/Purple_circle_full.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #27272a;
+            background-color: #fafafa;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.025em;
+        }
+
         @keyframes float {
             0% {
                 transform: translateY(0px);
             }
 
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-10px);
             }
 
             100% {
@@ -24,50 +74,34 @@
         }
 
         .floating {
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradient-shift 8s ease infinite;
+            color: #18181b;
+            /* Minimalist: no gradient, just strong hierarchy */
         }
 
-        @keyframes gradient-shift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid #e4e4e7;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            border-color: #d4d4d8;
         }
 
         .skill-bar {
-            transition: width 1.5s ease-in-out;
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        #rotating-image {
-            transition: opacity 1s ease-in-out;
-        }
-
-        /* New Animations */
+        /* Subtle transitions */
         .fade-in-section {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
 
@@ -76,50 +110,28 @@
             transform: translateY(0);
         }
 
-        @keyframes pulse-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
-            }
-
-            50% {
-                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
-            }
-        }
-
         .pulse-animation {
-            animation: pulse-glow 2s infinite;
+            /* Removed for minimalism or made very subtle */
+            transition: all 0.3s ease;
         }
 
-        /* Background Animations */
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        .pulse-animation:hover {
+            background-color: #f4f4f5;
         }
 
         .animated-bg {
-            background: linear-gradient(-45deg, #f8fafc, #e0e7ff, #f3e8ff, #ecfeff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background-color: #fafafa;
+            /* Removed rainbow gradient */
         }
 
         .hero-bg-shape {
             position: absolute;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.6;
+            filter: blur(80px);
+            opacity: 0.4;
             z-index: 0;
-            animation: float-shape 20s infinite linear;
+            /* Slower animation */
+            animation: float-shape 30s infinite linear;
         }
 
         @keyframes float-shape {
@@ -128,11 +140,11 @@
             }
 
             33% {
-                transform: translate(30px, -50px) rotate(120deg);
+                transform: translate(20px, -30px) rotate(120deg);
             }
 
             66% {
-                transform: translate(-20px, 20px) rotate(240deg);
+                transform: translate(-15px, 15px) rotate(240deg);
             }
 
             100% {
@@ -145,20 +157,26 @@
             z-index: 1;
         }
 
-        /* Navbar Improvements */
+        /* Minimalist Navbar */
         .nav-link {
             position: relative;
-            font-weight: 500;
+            font-weight: 400;
+            color: #52525b;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #18181b;
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            height: 1px;
             bottom: -4px;
             left: 0;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            background: #18181b;
             transition: width 0.3s ease;
         }
 
@@ -167,20 +185,21 @@
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease-in-out;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            transition: all 0.4s ease;
         }
 
         .glass-nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .nav-height {
             height: 5rem;
-            transition: height 0.3s ease;
+            transition: height 0.4s ease;
         }
 
         .glass-nav.scrolled .nav-height {
@@ -198,18 +217,19 @@
         }
 
         .nav-enter {
-            animation: slideDown 1s ease-out forwards;
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Parallax Background Elements */
+        /* Refined Parallax Background */
         .parallax-bg {
             position: absolute;
             pointer-events: none;
             z-index: 0;
             white-space: nowrap;
-            font-weight: 900;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
             text-transform: uppercase;
-            color: rgba(0, 0, 0, 0.03);
+            color: rgba(0, 0, 0, 0.02);
             line-height: 1;
         }
 
@@ -218,11 +238,7 @@
             overflow: hidden;
         }
 
-        .about-image-container {
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-        }
-
+        .about-image-container,
         .about-content-container {
             transition: transform 0.1s ease-out;
             will-change: transform;
@@ -230,79 +246,76 @@
     </style>
 </head>
 
-<body class="animated-bg font-sans">
+
+<body class="bg-zinc-50 font-sans text-zinc-800 antialiased selection:bg-zinc-200 selection:text-zinc-900">
     <!-- Navigation -->
-    <nav id="main-nav" class="fixed w-full glass-nav shadow-sm z-50 transition-all duration-300 nav-enter">
+    <nav id="main-nav" class="fixed w-full glass-nav z-50 transition-all duration-300 nav-enter">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center nav-height">
                 <div class="flex items-center group cursor-pointer">
-                    <span
-                        class="text-xl font-bold gradient-text transform group-hover:scale-105 transition duration-300">DATA
-                        & AI</span>
+                    <span class="text-xl font-bold tracking-tight text-zinc-900">DATA & AI</span>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition">Home</a>
-                    <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
-                    <a href="#skills" class="nav-link text-gray-700 hover:text-blue-600 transition">Skills</a>
-                    <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
-                    <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#home" class="nav-link text-sm uppercase tracking-widest">Home</a>
+                    <a href="#about" class="nav-link text-sm uppercase tracking-widest">About</a>
+                    <a href="#skills" class="nav-link text-sm uppercase tracking-widest">Skills</a>
+                    <a href="#projects" class="nav-link text-sm uppercase tracking-widest">Projects</a>
+                    <a href="#contact" class="nav-link text-sm uppercase tracking-widest">Contact</a>
                 </div>
                 <div class="md:hidden flex items-center">
-                    <button id="menu-btn" class="text-gray-700 transition-transform duration-300">
+                    <button id="menu-btn" class="text-zinc-800 transition-transform duration-300">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-nav pb-4 px-4 shadow-lg border-t border-gray-200/30">
-            <a href="#home"
-                class="block py-3 pl-3 border-l-4 border-transparent hover:border-blue-600 hover:bg-blue-50/50 text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-r-lg">Home</a>
-            <a href="#about"
-                class="block py-3 pl-3 border-l-4 border-transparent hover:border-blue-600 hover:bg-blue-50/50 text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-r-lg">About</a>
+        <div id="mobile-menu" class="hidden md:hidden glass-nav pb-4 px-4 border-t border-zinc-100">
+            <a href="#home" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Home</a>
+            <a href="#about" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">About</a>
             <a href="#skills"
-                class="block py-3 pl-3 border-l-4 border-transparent hover:border-blue-600 hover:bg-blue-50/50 text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-r-lg">Skills</a>
+                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Skills</a>
             <a href="#projects"
-                class="block py-3 pl-3 border-l-4 border-transparent hover:border-blue-600 hover:bg-blue-50/50 text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-r-lg">Projects</a>
+                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Projects</a>
             <a href="#contact"
-                class="block py-3 pl-3 border-l-4 border-transparent hover:border-blue-600 hover:bg-blue-50/50 text-gray-700 hover:text-blue-600 transition-all duration-300 rounded-r-lg">Contact</a>
+                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home"
-        class="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <!-- Background Shapes -->
         <div
-            class="hero-bg-shape bg-blue-200 w-72 h-72 top-10 left-10 mix-blend-multiply filter blur-2xl opacity-70 animate-blob">
+            class="hero-bg-shape bg-zinc-200 w-96 h-96 top-0 left-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob">
         </div>
         <div
-            class="hero-bg-shape bg-purple-200 w-72 h-72 bottom-10 right-10 mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000">
+            class="hero-bg-shape bg-zinc-300 w-96 h-96 bottom-0 right-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000">
         </div>
 
-        <div class="flex flex-col md:flex-row items-center content-relative">
+        <div class="flex flex-col md:flex-row items-center content-relative gap-12">
             <div class="md:w-1/2 mb-10 md:mb-0 fade-in-section">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">Leonel Hernandez
-                        Aguirre</span></h1>
-                <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700">Data & AI Engineering</h2>
-                <p class="text-lg text-gray-600 mb-8">Master's student in Data & Artificial Intelligence with 8+ years
-                    of IT experience. Specializing in Python automation, machine learning, and network systems.</p>
-                <div class="flex space-x-4">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tighter leading-tight text-zinc-900">
+                    Hi, I'm <span class="text-zinc-500">Leonel Hernandez Aguirre</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-light mb-8 text-zinc-600">Data & AI Engineering</h2>
+                <p class="text-lg text-zinc-600 mb-10 font-light leading-relaxed max-w-lg">Master's student in Data &
+                    Artificial Intelligence with 8+ years of IT experience. Specializing in Python automation, machine
+                    learning, and network systems.</p>
+                <div class="flex space-x-6">
                     <a href="#projects"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">View
+                        class="bg-zinc-900 hover:bg-zinc-800 text-white px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase">View
                         Work</a>
                     <a href="#contact"
-                        class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition pulse-animation">Contact
+                        class="border border-zinc-300 text-zinc-900 hover:bg-zinc-50 px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase">Contact
                         Me</a>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <div class="relative w-64 h-64 md:w-80 md:h-80">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-xl opacity-30">
-                    </div>
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <div class="absolute inset-0 bg-zinc-200 rounded-full blur-3xl opacity-20"></div>
                     <div id="three-container"
-                        class="relative w-full h-full rounded-full border-4 border-white shadow-lg floating overflow-hidden bg-white">
+                        class="relative w-full h-full rounded-full border border-zinc-100 shadow-2xl floating overflow-hidden bg-white">
                     </div>
                 </div>
             </div>
@@ -310,56 +323,58 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-gray-100">
+    <section id="about" class="py-24 bg-zinc-50 border-t border-zinc-100">
         <!-- Parallax Background Elements -->
         <div id="parallax-text-1" class="parallax-bg text-8xl md:text-[12rem] top-10 right-0 opacity-5">ENGINEERING
         </div>
-        <div id="parallax-text-2" class="parallax-bg text-7xl md:text-[8rem] bottom-10 left-0 opacity-3">INNOVATION
+        <div id="parallax-text-2" class="parallax-bg text-7xl md:text-[8rem] bottom-10 left-0 opacity-5">INNOVATION
         </div>
         <div id="parallax-shape-1"
-            class="parallax-bg w-64 h-64 border-8 border-blue-500/5 rounded-full -top-10 -left-10"></div>
+            class="parallax-bg w-64 h-64 border border-zinc-200 rounded-full -top-10 -left-10 opacity-30"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center fade-in-section">
-                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center about-image-container">
-                    <div class="bg-white p-4 rounded-xl shadow-lg">
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center fade-in-section gap-16">
+                <div class="md:w-1/3 flex justify-center about-image-container">
+                    <div class="p-2 border border-zinc-200 bg-white shadow-sm">
                         <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                            alt="About AI" class="w-64 h-64 object-cover rounded-lg">
+                            alt="About AI"
+                            class="w-64 h-64 object-cover filter grayscale hover:grayscale-0 transition duration-700">
                     </div>
                 </div>
-                <div class="md:w-2/3 md:pl-12 about-content-container">
-                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Bridging IT Experience with AI Innovation</h3>
-                    <p class="text-gray-600 mb-4">With 8+ years in IT and network systems, I'm now pursuing a Master's
-                        in Data & AI at Université Catholique de Lille. My goal is to combine my technical background
-                        with cutting-edge AI skills.</p>
-                    <p class="text-gray-600 mb-6">I hold a Systems Engineering degree from Universidad Autónoma de Nuevo
-                        León (Mexico) and multiple AI/ML certifications including Microsoft Azure AI Fundamentals and
-                        Deep Reinforcement Learning from Hugging Face.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-microchip text-blue-600"></i>
+                <div class="md:w-2/3 about-content-container">
+                    <h3 class="text-2xl font-medium mb-6 text-zinc-900 leading-snug">Bridging IT Experience with<br>AI
+                        Innovation</h3>
+                    <p class="text-zinc-600 mb-6 font-light leading-relaxed">With 8+ years in IT and network systems,
+                        I'm now pursuing a Master's in Data & AI at Université Catholique de Lille. My goal is to
+                        combine my technical background with cutting-edge AI skills.</p>
+                    <p class="text-zinc-600 mb-10 font-light leading-relaxed">I hold a Systems Engineering degree from
+                        Universidad Autónoma de Nuevo León (Mexico) and multiple AI/ML certifications including
+                        Microsoft Azure AI Fundamentals and Deep Reinforcement Learning from Hugging Face.</p>
+                    <div class="grid grid-cols-2 gap-y-6 gap-x-4">
+                        <div class="flex items-center group">
+                            <div class="mr-4 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                                <i class="fas fa-microchip text-xl"></i>
                             </div>
-                            <span class="text-gray-700">Deep Learning</span>
+                            <span class="text-zinc-700 font-medium">Deep Learning</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-purple-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-robot text-purple-600"></i>
+                        <div class="flex items-center group">
+                            <div class="mr-4 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                                <i class="fas fa-robot text-xl"></i>
                             </div>
-                            <span class="text-gray-700">Computer Vision</span>
+                            <span class="text-zinc-700 font-medium">Computer Vision</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-green-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-language text-green-600"></i>
+                        <div class="flex items-center group">
+                            <div class="mr-4 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                                <i class="fas fa-language text-xl"></i>
                             </div>
-                            <span class="text-gray-700">NLP</span>
+                            <span class="text-zinc-700 font-medium">NLP</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-yellow-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-chart-line text-yellow-600"></i>
+                        <div class="flex items-center group">
+                            <div class="mr-4 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                                <i class="fas fa-chart-line text-xl"></i>
                             </div>
-                            <span class="text-gray-700">Predictive Analytics</span>
+                            <span class="text-zinc-700 font-medium">Predictive Analytics</span>
                         </div>
                     </div>
                 </div>
@@ -368,127 +383,138 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-16">
+    <section id="skills" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Technical Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-section">
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 fade-in-section">
                 <div>
-                    <h3 class="text-xl font-semibold mb-6 text-gray-800">Machine Learning</h3>
-                    <div class="space-y-4">
+                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2">Machine Learning
+                    </h3>
+                    <div class="space-y-8">
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Deep Learning</span>
-                                <span class="text-gray-500">95%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Deep Learning</span>
+                                <span class="text-zinc-400 font-mono text-sm">95%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full skill-bar" style="width: 95%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 95%"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Computer Vision</span>
-                                <span class="text-gray-500">90%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Computer Vision</span>
+                                <span class="text-zinc-400 font-mono text-sm">90%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-purple-600 h-2.5 rounded-full skill-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Natural Language Processing</span>
-                                <span class="text-gray-500">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-600 h-2.5 rounded-full skill-bar" style="width: 85%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 90%"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Reinforcement Learning</span>
-                                <span class="text-gray-500">80%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Natural Language Processing</span>
+                                <span class="text-zinc-400 font-mono text-sm">85%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-yellow-600 h-2.5 rounded-full skill-bar" style="width: 80%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Reinforcement Learning</span>
+                                <span class="text-zinc-400 font-mono text-sm">80%</span>
+                            </div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 80%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-xl font-semibold mb-6 text-gray-800">Programming & Tools</h3>
-                    <div class="space-y-4">
+                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2">Programming & Tools
+                    </h3>
+                    <div class="space-y-8">
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Python</span>
-                                <span class="text-gray-500">98%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Python</span>
+                                <span class="text-zinc-400 font-mono text-sm">98%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full skill-bar" style="width: 98%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 98%"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">TensorFlow/PyTorch</span>
-                                <span class="text-gray-500">92%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">TensorFlow/PyTorch</span>
+                                <span class="text-zinc-400 font-mono text-sm">92%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-purple-600 h-2.5 rounded-full skill-bar" style="width: 92%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Cloud (Azure/GCP)</span>
-                                <span class="text-gray-500">88%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-600 h-2.5 rounded-full skill-bar" style="width: 88%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 92%"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-gray-700">Data Visualization</span>
-                                <span class="text-gray-500">85%</span>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Cloud (Azure/GCP)</span>
+                                <span class="text-zinc-400 font-mono text-sm">88%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-yellow-600 h-2.5 rounded-full skill-bar" style="width: 85%"></div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-zinc-700 font-light">Data Visualization</span>
+                                <span class="text-zinc-400 font-mono text-sm">85%</span>
+                            </div>
+                            <div class="w-full bg-zinc-100 h-1">
+                                <div class="bg-zinc-800 h-1 skill-bar" style="width: 85%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-12">
-                <h3 class="text-xl font-semibold mb-6 text-center text-gray-800">Frameworks & Libraries</h3>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fab fa-python text-blue-600 text-2xl mr-3"></i>
-                        <span>Python</span>
+            <div class="mt-20">
+                <h3 class="text-lg font-medium mb-10 text-center text-zinc-500 uppercase tracking-widest">Frameworks &
+                    Libraries</h3>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fab fa-python text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">Python</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-brain text-orange-500 text-2xl mr-3"></i>
-                        <span>TensorFlow</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-brain text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">TensorFlow</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-fire text-red-500 text-2xl mr-3"></i>
-                        <span>PyTorch</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-fire text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">PyTorch</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-project-diagram text-green-500 text-2xl mr-3"></i>
-                        <span>Keras</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-project-diagram text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">Keras</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-chart-bar text-yellow-500 text-2xl mr-3"></i>
-                        <span>Pandas</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-chart-bar text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">Pandas</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-wave-square text-blue-400 text-2xl mr-3"></i>
-                        <span>NumPy</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-wave-square text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">NumPy</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-cloud text-blue-300 text-2xl mr-3"></i>
-                        <span>OpenCV</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-cloud text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">OpenCV</span>
                     </div>
-                    <div class="bg-white shadow-md rounded-lg px-6 py-4 flex items-center">
-                        <i class="fas fa-comment-dots text-indigo-500 text-2xl mr-3"></i>
-                        <span>NLTK</span>
+                    <div
+                        class="bg-white border border-zinc-200 px-8 py-4 flex items-center hover:border-zinc-400 transition-colors duration-300">
+                        <i class="fas fa-comment-dots text-zinc-800 text-xl mr-3"></i>
+                        <span class="text-zinc-600 font-light">NLTK</span>
                     </div>
                 </div>
             </div>
@@ -496,126 +522,136 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-gray-100">
+    <section id="projects" class="py-24 bg-zinc-50 border-t border-zinc-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-section">
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 fade-in-section">
                 <!-- Project 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
-                    <div class="h-48 overflow-hidden">
+                <div class="bg-white border border-zinc-200 project-card overflow-hidden">
+                    <div class="h-64 overflow-hidden border-b border-zinc-100 relative group">
                         <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80"
-                            alt="SPACEGYM" class="w-full h-full object-cover">
+                            alt="SPACEGYM"
+                            class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-2">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-dumbbell text-blue-600"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold">SPACEGYM</h3>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <h3 class="text-xl font-medium text-zinc-900">SPACEGYM</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">User registration system for gym management with MongoDB backend
-                            and Flask frontend.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">MongoDB</span>
-                            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Flask</span>
-                            <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                        <p class="text-zinc-600 mb-6 font-light leading-relaxed">User registration system for gym
+                            management with MongoDB backend and Flask frontend.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Python</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">MongoDB</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Flask</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">JS</span>
                         </div>
                         <a href="https://github.com/LAguirr/gymspace" target="_blank"
-                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                            View on GitHub <i class="fas fa-arrow-right ml-2"></i>
+                            class="text-zinc-900 hover:text-zinc-600 font-medium flex items-center text-sm uppercase tracking-wider group">
+                            View on GitHub <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
-                    <div class="h-48 overflow-hidden">
+                <div class="bg-white border border-zinc-200 project-card overflow-hidden">
+                    <div class="h-64 overflow-hidden border-b border-zinc-100 relative group">
                         <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
-                            alt="FLASKMERAKI" class="w-full h-full object-cover">
+                            alt="FLASKMERAKI"
+                            class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-2">
-                            <div class="bg-purple-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-network-wired text-purple-600"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold">FLASKMERAKI</h3>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <h3 class="text-xl font-medium text-zinc-900">FLASKMERAKI</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">Meraki network device visualization application using Flask and
-                            Meraki Cloud API.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">Flask</span>
-                            <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Meraki API</span>
-                            <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Templates</span>
+                        <p class="text-zinc-600 mb-6 font-light leading-relaxed">Meraki network device visualization
+                            application using Flask and Meraki Cloud API.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Python</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Flask</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Meraki
+                                API</span>
                         </div>
                         <a href="https://github.com/LAguirr/flaskmeraki" target="_blank"
-                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                            View on GitHub <i class="fas fa-arrow-right ml-2"></i>
+                            class="text-zinc-900 hover:text-zinc-600 font-medium flex items-center text-sm uppercase tracking-wider group">
+                            View on GitHub <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition"></i>
                         </a>
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
-                    <div class="h-48 overflow-hidden">
+                <div class="bg-white border border-zinc-200 project-card overflow-hidden">
+                    <div class="h-64 overflow-hidden border-b border-zinc-100 relative group">
                         <img src="https://365datascience.com/resources/blog/w4ntct7turq-141-deploying-machine-learning-model-python-streamlit-1.jpg"
-                            alt="Streamlit" class="w-full h-full object-cover">
+                            alt="Streamlit"
+                            class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-2">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <i class="fab fa-python text-blue-600"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold">Streamlit model creator</h3>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <h3 class="text-xl font-medium text-zinc-900">STREAMLIT MODEL CREATOR</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">This Streamlit application provides an interactive web interface
-                            for an easy understanding and tool for data cleaning. Users can upload datasets, then clean
-                            the data, and train his model to download it and use it.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">Streamlit</span>
-                            <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">SkLearn</span>
-                            <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Pandas</span>
+                        <p class="text-zinc-600 mb-6 font-light leading-relaxed">Interactive web interface for data
+                            cleaning and model training. Users can upload datasets, clean data, and train models.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Python</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Streamlit</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">SkLearn</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Pandas</span>
                         </div>
                         <a href="https://github.com/LAguirr/streamlit" target="_blank"
-                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                            View on GitHub <i class="fas fa-arrow-right ml-2"></i>
+                            class="text-zinc-900 hover:text-zinc-600 font-medium flex items-center text-sm uppercase tracking-wider group">
+                            View on GitHub <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition"></i>
                         </a>
                     </div>
                 </div>
                 <!-- Project 4 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md project-card transition duration-300">
-                    <div class="h-48 overflow-hidden">
+                <div class="bg-white border border-zinc-200 project-card overflow-hidden">
+                    <div class="h-64 overflow-hidden border-b border-zinc-100 relative group">
                         <img src="https://www.radioclassique.fr/wp-content/thumbnails/uploads/2024/03/decathlon-logo-v2-13-03-2024-tt-width-978-height-383-crop-1-bgcolor-ffffff.jpg"
-                            alt="Decacouch" class="w-full object-cover">
+                            alt="Decacouch"
+                            class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
 
-                    <div class="p-6">
-                        <div class="flex items-center mb-2">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <i class="fa-solid fa-money-bill-trend-up"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold">Decacouch</h3>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <h3 class="text-xl font-medium text-zinc-900">DECACOACH</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">A project created in one night for the Nuit de l'info event at the
-                            Université catholique de Lille, as part of the Decathlon project</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">Web
-                                Development</span>
-                            <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">React</span>
-                            <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">TypeScript</span>
+                        <p class="text-zinc-600 mb-6 font-light leading-relaxed">A project created in one night for the
+                            Nuit de l'info event at the Université catholique de Lille, as part of the Decathlon
+                            project.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">Web
+                                Dev</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">React</span>
+                            <span
+                                class="bg-zinc-50 border border-zinc-200 text-zinc-600 text-xs px-3 py-1 uppercase tracking-widest">TypeScript</span>
                         </div>
                         <a href="https://decacoach.vercel.app/" target="_blank"
-                            class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                            View on Vercel<i class="fas fa-arrow-right ml-2"></i>
+                            class="text-zinc-900 hover:text-zinc-600 font-medium flex items-center text-sm uppercase tracking-wider group">
+                            View on Vercel<i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center mt-12">
+            <div class="text-center mt-20">
                 <a href="https://www.kaggle.com/megalino111" target="_blank"
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition">
+                    class="inline-flex items-center px-10 py-4 border border-zinc-900 text-sm font-medium text-zinc-900 hover:bg-zinc-900 hover:text-white transition uppercase tracking-widest duration-300">
                     View All Projects <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -624,69 +660,74 @@
 
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16">
+    <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Get In Touch</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Get In Touch</h2>
             <div class="flex flex-col items-center justify-center fade-in-section">
                 <div class="w-full md:w-2/3 lg:w-1/2 text-center mx-auto">
-                    <h3 class="text-2xl font-semibold mb-6 text-gray-800">Let's Collaborate</h3>
-                    <p class="text-gray-600 mb-8">I'm currently available for freelance work, consulting, or full-time
-                        positions. If you have a project that needs AI expertise or just want to say hi, feel free to
-                        reach out!</p>
-                    <div class="space-y-4 flex flex-col items-center">
-                        <div class="flex items-center">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-envelope text-blue-600"></i>
+                    <h3 class="text-2xl font-medium mb-6 text-zinc-900">Let's Collaborate</h3>
+                    <p class="text-zinc-600 mb-12 font-light leading-relaxed">I'm currently available for freelance
+                        work, consulting, or full-time positions. If you have a project that needs AI expertise or just
+                        want to say hi, feel free to reach out!</p>
+                    <div class="space-y-8 flex flex-col items-center">
+                        <div class="flex items-center group w-full justify-center">
+                            <div
+                                class="bg-zinc-50 border border-zinc-100 p-4 rounded-full mr-6 group-hover:border-zinc-300 transition-colors duration-300">
+                                <i class="fas fa-envelope text-zinc-800 text-xl"></i>
                             </div>
-                            <div>
-                                <h4 class="font-medium text-gray-700">Email</h4>
+                            <div class="text-left">
+                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1">Email</h4>
                                 <a href="mailto:lino_hdz28@hotmail.com"
-                                    class="text-blue-600 hover:text-blue-800">lino_hdz@hotmail.com</a>
+                                    class="text-zinc-600 hover:text-zinc-900 transition-colors text-lg font-light">lino_hdz@hotmail.com</a>
                             </div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-phone-alt text-green-600"></i>
+                        <div class="flex items-center group w-full justify-center">
+                            <div
+                                class="bg-zinc-50 border border-zinc-100 p-4 rounded-full mr-6 group-hover:border-zinc-300 transition-colors duration-300">
+                                <i class="fas fa-phone-alt text-zinc-800 text-xl"></i>
                             </div>
-                            <div>
-                                <h4 class="font-medium text-gray-700">Phone</h4>
-                                <a href="tel:+33 06 78 53 74 02" class="text-blue-600 hover:text-blue-800">+33 00 Let's
-                                    for a coffe</a>
+                            <div class="text-left">
+                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1">Phone</h4>
+                                <a href="tel:+33 06 78 53 74 02"
+                                    class="text-zinc-600 hover:text-zinc-900 transition-colors text-lg font-light">+33
+                                    00 Let's go for a coffee</a>
                             </div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-purple-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-map-marker-alt text-purple-600"></i>
+                        <div class="flex items-center group w-full justify-center">
+                            <div
+                                class="bg-zinc-50 border border-zinc-100 p-4 rounded-full mr-6 group-hover:border-zinc-300 transition-colors duration-300">
+                                <i class="fas fa-map-marker-alt text-zinc-800 text-xl"></i>
                             </div>
-                            <div>
-                                <h4 class="font-medium text-gray-700">Location</h4>
-                                <p class="text-gray-600">Lille, France</p>
+                            <div class="text-left">
+                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1">Location
+                                </h4>
+                                <p class="text-zinc-600 text-lg font-light">Lille, France</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 text-center">
-                        <h4 class="font-medium text-gray-700 mb-4">Connect With Me</h4>
-                        <div class="flex justify-center items-center">
+                    <div class="mt-16 text-center">
+                        <h4 class="font-medium text-zinc-900 mb-8 uppercase tracking-widest text-xs">Connect With Me
+                        </h4>
+                        <div class="flex justify-center items-center gap-4">
                             <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <i class="fab fa-linkedin-in text-blue-700"></i>
+                                class="bg-white border border-zinc-200 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 text-zinc-600 p-4 rounded-full transition duration-300">
+                                <i class="fab fa-linkedin-in text-xl"></i>
                             </a>
                             <a href="https://github.com/LAguirr" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <i class="fab fa-github text-gray-800"></i>
+                                class="bg-white border border-zinc-200 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 text-zinc-600 p-4 rounded-full transition duration-300">
+                                <i class="fab fa-github text-xl"></i>
                             </a>
                             <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <i class="fab fa-hackerrank text-green-600"></i>
+                                class="bg-white border border-zinc-200 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 text-zinc-600 p-4 rounded-full transition duration-300">
+                                <i class="fab fa-hackerrank text-xl"></i>
                             </a>
                             <a href="https://www.kaggle.com/megalino111" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <i class="fab fa-kaggle text-blue-600"></i>
+                                class="bg-white border border-zinc-200 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 text-zinc-600 p-4 rounded-full transition duration-300">
+                                <i class="fab fa-kaggle text-xl"></i>
                             </a>
                             <a href="https://huggingface.co/Megalino111" target="_blank"
-                                class="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition">
-                                <img src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg"
-                                    class="fas fa-robot text-yellow-600" style="width: 28px; height: 28px;"></img>
+                                class="bg-white border border-zinc-200 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 text-zinc-600 p-4 rounded-full transition duration-300 flex items-center justify-center h-[54px] w-[54px]">
+                                <i class="fas fa-robot text-xl"></i>
                             </a>
                         </div>
                     </div>
@@ -697,37 +738,33 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
+    <footer class="bg-zinc-900 text-white py-16 border-t border-zinc-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <span class="text-xl font-bold gradient-text">Give me the opportunity</span>
-                    <p class="text-gray-400 mt-2">Let's build the future with artificial intelligence.</p>
+                <div class="mb-8 md:mb-0 text-center md:text-left">
+                    <span class="text-xl font-bold tracking-tight text-white mb-2 block">Give me the opportunity</span>
+                    <p class="text-zinc-500 text-sm font-light">Let's build the future with artificial intelligence.</p>
                 </div>
-                <div class="flex space-x-6">
+                <div class="flex space-x-8">
                     <a href="https://www.linkedin.com/in/leonel-aguirre" target="_blank"
-                        class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
+                        class="text-zinc-500 hover:text-white transition duration-300"><i
+                            class="fab fa-linkedin-in text-lg"></i></a>
                     <a href="https://github.com/LAguirr" target="_blank"
-                        class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-github"></i>
-                    </a>
+                        class="text-zinc-500 hover:text-white transition duration-300"><i
+                            class="fab fa-github text-lg"></i></a>
                     <a href="https://www.hackerrank.com/profile/lino_hdz28" target="_blank"
-                        class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-hackerrank"></i>
-                    </a>
+                        class="text-zinc-500 hover:text-white transition duration-300"><i
+                            class="fab fa-hackerrank text-lg"></i></a>
                     <a href="https://www.kaggle.com/megalino111" target="_blank"
-                        class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-kaggle"></i>
-                    </a>
+                        class="text-zinc-500 hover:text-white transition duration-300"><i
+                            class="fab fa-kaggle text-lg"></i></a>
                     <a href="https://huggingface.co/Megalino111" target="_blank"
-                        class="text-gray-400 hover:text-white transition">
-                        <i class="fas fa-robot"></i>
-                    </a>
+                        class="text-zinc-500 hover:text-white transition duration-300"><i
+                            class="fas fa-robot text-lg"></i></a>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
+            <div
+                class="mt-16 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs uppercase tracking-widest">
                 <p>© 2025 Leonel Hernandez Aguirre. All rights reserved.</p>
             </div>
         </div>
@@ -735,33 +772,33 @@
 
     <!-- Engagement Timer & Overlay -->
     <div id="engagement-timer"
-        class="fixed bottom-6 right-6 z-50 bg-white rounded-full shadow-lg p-1 cursor-pointer transition-transform hover:scale-105"
+        class="fixed bottom-6 right-6 z-50 bg-white border border-zinc-200 rounded-full shadow-lg p-1 cursor-pointer transition-transform hover:scale-105"
         style="display: none;">
-        <div class="relative w-16 h-16 flex items-center justify-center">
+        <div class="relative w-12 h-12 flex items-center justify-center">
             <svg class="w-full h-full transform -rotate-90">
-                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="transparent" />
-                <circle id="timer-progress" cx="32" cy="32" r="28" stroke="#2563eb" stroke-width="4" fill="transparent"
-                    class="transition-all duration-1000 ease-linear" stroke-dasharray="175.93" stroke-dashoffset="0"
+                <circle cx="24" cy="24" r="20" stroke="#f4f4f5" stroke-width="2" fill="transparent" />
+                <circle id="timer-progress" cx="24" cy="24" r="20" stroke="#27272a" stroke-width="2" fill="transparent"
+                    class="transition-all duration-1000 ease-linear" stroke-dasharray="125.66" stroke-dashoffset="0"
                     stroke-linecap="round" />
             </svg>
-            <span id="timer-text" class="absolute text-sm font-bold text-gray-700">60</span>
+            <span id="timer-text" class="absolute text-xs font-bold text-zinc-800">60</span>
         </div>
     </div>
 
     <div id="engagement-overlay"
-        class="fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000">
-        <div class="max-w-2xl px-6 text-center text-white transform translate-y-4 transition-transform duration-1000"
+        class="fixed inset-0 bg-zinc-900/95 backdrop-blur-sm z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-700">
+        <div class="max-w-2xl px-6 text-center text-white transform translate-y-4 transition-transform duration-700"
             id="engagement-message">
-            <div class="mb-6">
-                <i class="fas fa-eye text-5xl text-blue-400 mb-4"></i>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Thanks for watching!</h2>
+            <div class="mb-8">
+                <i class="fas fa-eye text-4xl text-zinc-400 mb-6"></i>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tighter">Thanks for watching.</h2>
             </div>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+            <p class="text-xl md:text-2xl text-zinc-400 mb-12 font-light leading-relaxed">
                 If you watched for more than a minute, it's because you're interested. We can continue the conversation
                 via email:
             </p>
             <a href="mailto:lino_hdz28@hotmail.com"
-                class="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 text-lg shadow-lg hover:shadow-blue-500/50">
+                class="inline-block bg-white text-zinc-900 border border-transparent hover:bg-zinc-200 transition duration-300 px-10 py-4 font-medium uppercase tracking-widest text-sm">
                 lino_hdz28@hotmail.com
             </a>
         </div>
@@ -1053,7 +1090,7 @@
 
             let timeLeft = 60;
             const totalTime = 60;
-            const radius = 28;
+            const radius = 20;
             const circumference = 2 * Math.PI * radius;
 
             if (progressCircle) {
