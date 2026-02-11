@@ -70,7 +70,7 @@
         body.night-theme h1,
         body.night-theme h2 {
             font-family: 'Vidaloka', serif;
-            font-style: italic;
+
             color: #e4e4e7;
         }
 
@@ -78,7 +78,6 @@
         body.night-theme h4,
         body.night-theme h5,
         body.night-theme h6 {
-            font-style: italic;
             color: #e4e4e7;
         }
 
@@ -464,14 +463,46 @@
                     <span class="text-xl font-bold tracking-tight text-zinc-900">DATA & AI</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-10">
-                    <a href="#home" class="nav-link text-sm uppercase tracking-widest">Home</a>
-                    <a href="#about" class="nav-link text-sm uppercase tracking-widest">About</a>
-                    <a href="#skills" class="nav-link text-sm uppercase tracking-widest">Skills</a>
-                    <a href="#projects" class="nav-link text-sm uppercase tracking-widest">Projects</a>
-                    <a href="#contact" class="nav-link text-sm uppercase tracking-widest">Contact</a>
+                    <a href="#home" class="nav-link text-sm uppercase tracking-widest" data-i18n="nav.home">Home</a>
+                    <a href="#about" class="nav-link text-sm uppercase tracking-widest" data-i18n="nav.about">About</a>
+                    <a href="#skills" class="nav-link text-sm uppercase tracking-widest"
+                        data-i18n="nav.skills">Skills</a>
+                    <a href="#projects" class="nav-link text-sm uppercase tracking-widest"
+                        data-i18n="nav.projects">Projects</a>
+                    <a href="#contact" class="nav-link text-sm uppercase tracking-widest"
+                        data-i18n="nav.contact">Contact</a>
                     <button id="theme-toggle" class="theme-toggle-nav" aria-label="Toggle Night Theme">
                         <i class="fas fa-moon text-lg"></i>
                     </button>
+                    <!-- Language Dropdown -->
+                    <div class="relative ml-2">
+                        <button id="language-toggle" class="theme-toggle-nav flex items-center"
+                            aria-label="Change Language">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="currentColor">
+                                <path
+                                    d="m476-80 182-480h84L924-80h-84l-43-122H603L560-80h-84ZM160-200l-56-56 202-202q-35-35-63.5-80T190-640h84q20 39 40 68t48 58q33-33 68.5-92.5T484-720H40v-80h280v-80h80v80h280v80H564q-21 72-63 148t-83 116l96 98-30 82-122-125-202 201Zm468-72h144l-72-204-72 204Z" />
+                            </svg>
+                        </button>
+                        <div id="language-dropdown"
+                            class="hidden absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 transition-all duration-200 opacity-0 transform scale-95 origin-top-right">
+                            <button
+                                class="block w-full text-left px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 transition-colors uppercase tracking-wide font-medium"
+                                data-lang="en">
+                                English
+                            </button>
+                            <button
+                                class="block w-full text-left px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 transition-colors uppercase tracking-wide font-medium"
+                                data-lang="es">
+                                Español
+                            </button>
+                            <button
+                                class="block w-full text-left px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 transition-colors uppercase tracking-wide font-medium"
+                                data-lang="fr">
+                                Français
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="menu-btn" class="text-zinc-800 transition-transform duration-300">
@@ -482,20 +513,22 @@
         </div>
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-nav pb-4 px-4 border-t border-zinc-100">
-            <a href="#home" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Home</a>
-            <a href="#about" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">About</a>
-            <a href="#skills"
-                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Skills</a>
-            <a href="#projects"
-                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Projects</a>
-            <a href="#contact"
-                class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300">Contact</a>
+            <a href="#home" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300"
+                data-i18n="nav.home">Home</a>
+            <a href="#about" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300"
+                data-i18n="nav.about">About</a>
+            <a href="#skills" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300"
+                data-i18n="nav.skills">Skills</a>
+            <a href="#projects" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300"
+                data-i18n="nav.projects">Projects</a>
+            <a href="#contact" class="block py-3 text-zinc-600 hover:text-zinc-900 transition-all duration-300"
+                data-i18n="nav.contact">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home"
-        class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        class="relative overflow-hidden pt-32 pb-20 md:pt-38 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <!-- Background Shapes -->
         <div
             class="hero-bg-shape bg-zinc-200 w-96 h-96 top-0 left-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob">
@@ -507,18 +540,23 @@
         <div class="flex flex-col md:flex-row items-center content-relative gap-12">
             <div class="md:w-1/2 mb-10 md:mb-0 fade-in-section">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tighter leading-tight text-zinc-900">
-                    Hi, I'm <span class="text-zinc-500">Leonel Hernandez Aguirre</span>
+                    <span data-i18n="hero.greeting">Hi, I'm</span> <span class="text-zinc-500">Leonel Hernandez
+                        Aguirre</span>
                 </h1>
-                <h2 class="text-2xl md:text-3xl font-light mb-8 text-zinc-600">Data & AI Engineering</h2>
-                <p class="text-lg text-zinc-600 mb-10 font-light leading-relaxed max-w-lg">Master's student in Data &
+                <h2 class="text-2xl md:text-3xl font-light mb-8 text-zinc-600" data-i18n="hero.role">Data & AI
+                    Engineering</h2>
+                <p class="text-lg text-zinc-600 mb-10 font-light leading-relaxed max-w-lg" data-i18n="hero.description">
+                    Master's student in Data &
                     Artificial Intelligence with 8+ years of IT experience. Specializing in Python automation, machine
                     learning, and network systems.</p>
                 <div class="flex space-x-6">
                     <a href="#projects"
-                        class="bg-zinc-900 hover:bg-zinc-800 text-white px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase">View
+                        class="bg-zinc-900 hover:bg-zinc-800 text-white px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase"
+                        data-i18n="hero.viewWork">View
                         Work</a>
                     <a href="#contact"
-                        class="border border-zinc-300 text-zinc-900 hover:bg-zinc-50 px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase">Contact
+                        class="border border-zinc-300 text-zinc-900 hover:bg-zinc-50 px-8 py-4 rounded-none font-medium transition duration-300 text-sm tracking-widest uppercase"
+                        data-i18n="hero.contactMe">Contact
                         Me</a>
                 </div>
             </div>
@@ -544,7 +582,8 @@
             class="parallax-bg w-64 h-64 border border-zinc-200 rounded-full -top-10 -left-10 opacity-30"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">About Me</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900" data-i18n="about.title">
+                About Me</h2>
             <div class="flex flex-col md:flex-row items-center fade-in-section gap-16">
                 <div class="md:w-1/3 flex justify-center about-image-container">
                     <div class="p-2 border border-zinc-200 bg-white shadow-sm">
@@ -554,12 +593,15 @@
                     </div>
                 </div>
                 <div class="md:w-2/3 about-content-container">
-                    <h3 class="text-2xl font-medium mb-6 text-zinc-900 leading-snug">Bridging IT Experience with<br>AI
+                    <h3 class="text-2xl font-medium mb-6 text-zinc-900 leading-snug" data-i18n="about.subtitle">Bridging
+                        IT Experience with<br>AI
                         Innovation</h3>
-                    <p class="text-zinc-600 mb-6 font-light leading-relaxed">With 8+ years in IT and network systems,
+                    <p class="text-zinc-600 mb-6 font-light leading-relaxed" data-i18n="about.desc1">With 8+ years in IT
+                        and network systems,
                         I'm now pursuing a Master's in Data & AI at Université Catholique de Lille. My goal is to
                         combine my technical background with cutting-edge AI skills.</p>
-                    <p class="text-zinc-600 mb-10 font-light leading-relaxed">I hold a Systems Engineering degree from
+                    <p class="text-zinc-600 mb-10 font-light leading-relaxed" data-i18n="about.desc2">I hold a Systems
+                        Engineering degree from
                         Universidad Autónoma de Nuevo León (Mexico) and multiple AI/ML certifications including
                         Microsoft Azure AI Fundamentals and Deep Reinforcement Learning from Hugging Face.</p>
                     <div class="grid grid-cols-2 gap-y-6 gap-x-4">
@@ -596,10 +638,12 @@
     <!-- Skills Section -->
     <section id="skills" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Technical Skills</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900" data-i18n="skills.title">
+                Technical Skills</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 fade-in-section">
                 <div>
-                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2">Machine Learning
+                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2"
+                        data-i18n="skills.ml">Machine Learning
                     </h3>
                     <div class="space-y-8">
                         <div>
@@ -641,7 +685,8 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2">Programming & Tools
+                    <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2"
+                        data-i18n="skills.prog">Programming & Tools
                     </h3>
                     <div class="space-y-8">
                         <div>
@@ -684,7 +729,8 @@
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-lg font-medium mb-10 text-center text-zinc-500 uppercase tracking-widest">Frameworks &
+                <h3 class="text-lg font-medium mb-10 text-center text-zinc-500 uppercase tracking-widest"
+                    data-i18n="skills.frameworks">Frameworks &
                     Libraries</h3>
                 <div class="flex flex-wrap justify-center gap-6">
                     <div
@@ -735,7 +781,8 @@
     <!-- Projects Section -->
     <section id="projects" class="py-24 bg-zinc-50 border-t border-zinc-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Featured Projects</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900" data-i18n="projects.title">
+                Featured Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 fade-in-section">
                 <!-- Project 1 -->
                 <div class="bg-white border border-zinc-200 project-card overflow-hidden">
@@ -863,7 +910,7 @@
             <div class="text-center mt-20">
                 <a href="https://www.kaggle.com/megalino111" target="_blank"
                     class="inline-flex items-center px-10 py-4 border border-zinc-900 text-sm font-medium text-zinc-900 hover:bg-zinc-900 hover:text-white transition uppercase tracking-widest duration-300">
-                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                    <span data-i18n="projects.viewAll">View All Projects</span> <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
         </div>
@@ -873,11 +920,14 @@
     <!-- Contact Section -->
     <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Get In Touch</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900" data-i18n="contact.title">
+                Get In Touch</h2>
             <div class="flex flex-col items-center justify-center fade-in-section">
                 <div class="w-full md:w-2/3 lg:w-1/2 text-center mx-auto">
-                    <h3 class="text-2xl font-medium mb-6 text-zinc-900">Let's Collaborate</h3>
-                    <p class="text-zinc-600 mb-12 font-light leading-relaxed">I'm currently available for freelance
+                    <h3 class="text-2xl font-medium mb-6 text-zinc-900" data-i18n="contact.subtitle">Let's Collaborate
+                    </h3>
+                    <p class="text-zinc-600 mb-12 font-light leading-relaxed" data-i18n="contact.desc">I'm currently
+                        available for freelance
                         work, consulting, or full-time positions. If you have a project that needs AI expertise or just
                         want to say hi, feel free to reach out!</p>
                     <div class="space-y-8 flex flex-col items-center">
@@ -887,7 +937,8 @@
                                 <i class="fas fa-envelope text-zinc-800 text-xl"></i>
                             </div>
                             <div class="text-left">
-                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1">Email</h4>
+                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1"
+                                    data-i18n="contact.email">Email</h4>
                                 <a href="mailto:lino_hdz28@hotmail.com"
                                     class="text-zinc-600 hover:text-zinc-900 transition-colors text-lg font-light">lino_hdz@hotmail.com</a>
                             </div>
@@ -898,10 +949,12 @@
                                 <i class="fas fa-phone-alt text-zinc-800 text-xl"></i>
                             </div>
                             <div class="text-left">
-                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1">Phone</h4>
+                                <h4 class="font-medium text-zinc-900 uppercase tracking-widest text-xs mb-1"
+                                    data-i18n="contact.phone">Phone</h4>
                                 <a href="tel:+33 06 78 53 74 02"
-                                    class="text-zinc-600 hover:text-zinc-900 transition-colors text-lg font-light">+33
-                                    00 Let's go for a coffee</a>
+                                    class="text-zinc-600 hover:text-zinc-900 transition-colors text-lg font-light">
+                                    +33 06 78 53 74 02 <span data-i18n="contact.coffee">Let's go for a coffee</span>
+                                </a>
                             </div>
                         </div>
                         <div class="flex items-center group w-full justify-center">
@@ -1002,9 +1055,10 @@
             id="engagement-message">
             <div class="mb-8">
                 <i class="fas fa-eye text-4xl text-zinc-400 mb-6"></i>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tighter">Thanks for watching.</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tighter" data-i18n="engagement.title">Thanks for
+                    watching.</h2>
             </div>
-            <p class="text-xl md:text-2xl text-zinc-400 mb-12 font-light leading-relaxed">
+            <p class="text-xl md:text-2xl text-zinc-400 mb-12 font-light leading-relaxed" data-i18n="engagement.desc">
                 If you watched for more than a minute, it's because you're interested. We can continue the conversation
                 via email:
             </p>
@@ -1364,6 +1418,203 @@
         } else {
             initEngagementTimer();
         }
+
+        // --- Multi-Language Support ---
+        const translations = {
+            en: {
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.skills": "Skills",
+                "nav.projects": "Projects",
+                "nav.contact": "Contact",
+
+                "hero.greeting": "Hi, I'm",
+                "hero.role": "Data & AI Engineering",
+                "hero.description": "Master's student in Data & Artificial Intelligence with 8+ years of IT experience. Specializing in Python automation, machine learning, and network systems.",
+                "hero.viewWork": "View Work",
+                "hero.contactMe": "Contact Me",
+
+                "about.title": "About Me",
+                "about.subtitle": "Bridging IT Experience with<br>AI Innovation",
+                "about.desc1": "With 8+ years in IT and network systems, I'm now pursuing a Master's in Data & AI at Université Catholique de Lille. My goal is to combine my technical background with cutting-edge AI skills.",
+                "about.desc2": "I hold a Systems Engineering degree from Universidad Autónoma de Nuevo León (Mexico) and multiple AI/ML certifications including Microsoft Azure AI Fundamentals and Deep Reinforcement Learning from Hugging Face.",
+
+                "skills.title": "Technical Skills",
+                "skills.ml": "Machine Learning",
+                "skills.prog": "Programming & Tools",
+                "skills.frameworks": "Frameworks & Libraries",
+
+                "projects.title": "Featured Projects",
+                "projects.viewAll": "View All Projects",
+
+                "contact.title": "Get In Touch",
+                "contact.subtitle": "Let's Collaborate",
+                "contact.desc": "I'm currently available for freelance work, consulting, or full-time positions. If you have a project that needs AI expertise or just want to say hi, feel free to reach out!",
+                "contact.email": "Email",
+                "contact.phone": "Phone",
+                "contact.coffee": "Let's go for a coffee",
+
+                "engagement.title": "Thanks for watching.",
+                "engagement.desc": "If you watched for more than a minute, it's because you're interested. We can continue the conversation via email:"
+            },
+            es: {
+                "nav.home": "Inicio",
+                "nav.about": "Sobre Mí",
+                "nav.skills": "Habilidades",
+                "nav.projects": "Proyectos",
+                "nav.contact": "Contacto",
+
+                "hero.greeting": "Hola, soy",
+                "hero.role": "Ingeniería de Datos e IA",
+                "hero.description": "Estudiante de maestría en Datos e Inteligencia Artificial con más de 8 años de experiencia en TI. Especializado en automatización con Python, aprendizaje automático y sistemas de redes.",
+                "hero.viewWork": "Ver Proyectos",
+                "hero.contactMe": "Contáctame",
+
+                "about.title": "Sobre Mí",
+                "about.subtitle": "Uniendo Experiencia en TI con<br>Innovación en IA",
+                "about.desc1": "Con más de 8 años en TI y sistemas de redes, ahora estoy cursando una Maestría en Datos e IA en la Universidad Católica de Lille. Mi objetivo es combinar mi experiencia técnica con habilidades de IA de vanguardia.",
+                "about.desc2": "Tengo un título en Ingeniería de Sistemas de la Universidad Autónoma de Nuevo León (México) y múltiples certificaciones en IA/ML, incluyendo Microsoft Azure AI Fundamentals y Deep Reinforcement Learning de Hugging Face.",
+
+                "skills.title": "Habilidades Técnicas",
+                "skills.ml": "Aprendizaje Automático",
+                "skills.prog": "Programación y Herramientas",
+                "skills.frameworks": "Frameworks y Librerías",
+
+                "projects.title": "Proyectos Destacados",
+                "projects.viewAll": "Ver Todos los Proyectos",
+
+                "contact.title": "Contáctame",
+                "contact.subtitle": "Colaboremos",
+                "contact.desc": "Actualmente estoy disponible para trabajos independientes, consultoría o puestos de tiempo completo. Si tienes un proyecto que necesita experiencia en IA o simplemente quieres saludar, ¡no dudes en contactarme!",
+                "contact.email": "Correo",
+                "contact.phone": "Teléfono",
+                "contact.coffee": "Vamos por un café",
+
+                "engagement.title": "Gracias por ver.",
+                "engagement.desc": "Si viste por más de un minuto, es porque estás interesado. Podemos continuar la conversación por correo:"
+            },
+            fr: {
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.skills": "Compétences",
+                "nav.projects": "Projets",
+                "nav.contact": "Contact",
+
+                "hero.greeting": "Bonjour, je suis",
+                "hero.role": "Ingénierie des Données et IA",
+                "hero.description": "Étudiant en master Data & Intelligence Artificielle avec plus de 8 ans d'expérience en informatique. Spécialisé en automatisation Python, machine learning et systèmes réseaux.",
+                "hero.viewWork": "Voir Projets",
+                "hero.contactMe": "Me Contacter",
+
+                "about.title": "À Propos de Moi",
+                "about.subtitle": "Allier Expérience TI et<br>Innovation IA",
+                "about.desc1": "Avec plus de 8 ans d'expérience en informatique et réseaux, je poursuis actuellement un Master en Data & IA à l'Université Catholique de Lille. Mon objectif est de combiner mon expérience technique avec des compétences de pointe en IA.",
+                "about.desc2": "Je suis titulaire d'un diplôme en Ingénierie des Systèmes de l'Universidad Autónoma de Nuevo León (Mexique) et de multiples certifications IA/ML, dont Microsoft Azure AI Fundamentals et Deep Reinforcement Learning de Hugging Face.",
+
+                "skills.title": "Compétences Techniques",
+                "skills.ml": "Apprentissage Automatique",
+                "skills.prog": "Programmation et Outils",
+                "skills.frameworks": "Frameworks et Bibliothèques",
+
+                "projects.title": "Projets en Vedette",
+                "projects.viewAll": "Voir Tous les Projets",
+
+                "contact.title": "Contactez-moi",
+                "contact.subtitle": "Collaborons",
+                "contact.desc": "Je suis actuellement disponible pour du travail en freelance, du conseil ou des postes à temps plein. Si vous avez un projet nécessitant une expertise en IA ou si vous voulez simplement dire bonjour, n'hésitez pas à me contacter !",
+                "contact.email": "Email",
+                "contact.phone": "Téléphone",
+                "contact.coffee": "Allons prendre un café",
+
+                "engagement.title": "Merci d'avoir regardé.",
+                "engagement.desc": "Si vous avez regardé plus d'une minute, c'est que vous êtes intéressé. Nous pouvons continuer la conversation par email :"
+            }
+        };
+
+        const supportedLanguages = ['en', 'es', 'fr'];
+        let currentLanguage = 'en';
+
+        function detectLanguage() {
+            const storedLang = localStorage.getItem('selectedLanguage');
+            if (storedLang && supportedLanguages.includes(storedLang)) {
+                return storedLang;
+            }
+
+            const browserLang = navigator.language.slice(0, 2);
+            if (supportedLanguages.includes(browserLang)) {
+                return browserLang;
+            }
+
+            return 'en';
+        }
+
+        function setLanguage(lang) {
+            if (!supportedLanguages.includes(lang)) return;
+
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            document.documentElement.lang = lang;
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+        }
+
+        const langBtn = document.getElementById('language-toggle');
+        const langDropdown = document.getElementById('language-dropdown');
+        const langOptions = langDropdown ? langDropdown.querySelectorAll('button') : [];
+
+        function toggleDropdown(show) {
+            if (!langDropdown) return;
+            if (show) {
+                langDropdown.classList.remove('hidden');
+                // Small delay to allow display:block to apply before opacity transition
+                requestAnimationFrame(() => {
+                    langDropdown.classList.remove('opacity-0', 'transform', 'scale-95');
+                    langDropdown.classList.add('opacity-100', 'transform', 'scale-100');
+                });
+            } else {
+                langDropdown.classList.remove('opacity-100', 'transform', 'scale-100');
+                langDropdown.classList.add('opacity-0', 'transform', 'scale-95');
+                // Wait for transition to finish before hiding
+                setTimeout(() => {
+                    langDropdown.classList.add('hidden');
+                }, 200);
+            }
+        }
+
+        if (langBtn) {
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isHidden = langDropdown.classList.contains('hidden');
+                toggleDropdown(isHidden);
+            });
+        }
+
+        // Handle language selection
+        langOptions.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const selectedLang = btn.getAttribute('data-lang');
+                setLanguage(selectedLang);
+                toggleDropdown(false);
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (langDropdown && !langDropdown.classList.contains('hidden') && !langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                toggleDropdown(false);
+            }
+        });
+
+        // Initialize Language
+        setLanguage(detectLanguage());
+
     </script>
 
 </html>
