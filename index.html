@@ -243,11 +243,413 @@
             transition: transform 0.1s ease-out;
             will-change: transform;
         }
+
+        :root {
+            --motion-ink: #52525b;
+            --motion-soft: rgba(79, 70, 229, .32);
+            --motion-cool: rgba(14, 116, 144, .28);
+            --motion-warm: rgba(180, 83, 9, .18);
+        }
+
+        .global-motion-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 24;
+            pointer-events: none;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity .45s ease, visibility .45s;
+            mix-blend-mode: multiply;
+        }
+
+        .global-motion-layer canvas {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        body.motion-visible .global-motion-layer {
+            visibility: visible;
+            opacity: .52;
+        }
+
+        .motion-control {
+            position: fixed;
+            z-index: 45;
+            top: 5.45rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            border: 1px solid rgba(63, 63, 70, .22);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .92);
+            color: #27272a;
+            padding: .62rem 1.05rem;
+            box-shadow: 0 8px 24px rgba(24, 24, 27, .08);
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .motion-control::before {
+            content: '';
+            width: .42rem;
+            height: .42rem;
+            border-radius: 50%;
+            background: #71717a;
+            box-shadow: 0 0 0 3px rgba(113, 113, 122, .12);
+        }
+
+        .motion-control:hover {
+            border-color: rgba(63, 63, 70, .48);
+            background: #fff;
+            box-shadow: 0 10px 28px rgba(24, 24, 27, .12);
+        }
+
+        .motion-control:focus-visible,
+        .motion-scene-button:focus-visible,
+        .motion-mode:focus-visible,
+        .motion-range:focus-visible {
+            outline: 3px solid rgba(79, 70, 229, .45);
+            outline-offset: 3px;
+        }
+
+        .motion-control.is-ready::before {
+            background: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .12), 0 0 14px rgba(79, 70, 229, .38);
+        }
+
+        .motion-control.is-ready {
+            animation: motion-button-breathe 2.8s ease-in-out infinite;
+        }
+
+        @keyframes motion-button-breathe {
+            50% { box-shadow: 0 10px 30px rgba(79, 70, 229, .17); }
+        }
+
+        body:not(.motion-running) .floating,
+        body:not(.motion-running) .hero-bg-shape {
+            animation-play-state: paused !important;
+        }
+
+        body:not(.motion-running) .nav-enter {
+            animation: none !important;
+            transform: none !important;
+        }
+
+        body:not(.motion-running) .fade-in-section {
+            transition-duration: 0s !important;
+        }
+
+        body:not(.motion-running) .skill-bar {
+            transition: none !important;
+        }
+
+        body.motion-running .floating,
+        body.motion-running .hero-bg-shape,
+        body.motion-running .nav-enter {
+            animation-play-state: running !important;
+        }
+
+        body.motion-running .project-card {
+            transform: perspective(900px) rotateX(var(--motion-tilt-x, 0deg)) rotateY(var(--motion-tilt-y, 0deg));
+        }
+
+        body.motion-running .project-card:hover {
+            transform: perspective(900px) rotateX(var(--motion-tilt-x, 0deg)) rotateY(var(--motion-tilt-y, 0deg)) translateY(-4px);
+        }
+
+        .motion-overlay,
+        .motion-ticker {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease, visibility .4s;
+        }
+
+        body.motion-visible .motion-overlay,
+        body.motion-visible .motion-ticker {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        body.motion-visible .motion-overlay.motion-wave-stage,
+        body.motion-visible .motion-overlay.motion-geometry-stage { display: flex; }
+
+        body.motion-visible .motion-overlay { pointer-events: auto; }
+        body.motion-visible canvas.motion-overlay,
+        body.motion-visible .motion-overlay canvas { pointer-events: none; }
+
+        .hero-motion-stage {
+            position: absolute;
+            inset: -12%;
+            z-index: 1;
+            width: 124%;
+            height: 124%;
+            transform: translateX(420px);
+            pointer-events: none;
+        }
+
+        #three-container {
+            z-index: 2;
+        }
+
+        .motion-scene-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .about-art-frame {
+            position: relative;
+            display: inline-block;
+            isolation: isolate;
+        }
+
+        #bloomCanvas {
+            position: absolute;
+            inset: -2.25rem;
+            z-index: 0;
+            width: calc(100% + 4.5rem);
+            height: calc(100% + 4.5rem);
+        }
+
+        .about-art-frame img { display: block; position: relative; z-index: 1; }
+        .about-image-container { flex-direction: column; align-items: center; }
+
+        .motion-scene-button {
+            border: 1px solid #d4d4d8;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .92);
+            color: #52525b;
+            padding: .5rem .85rem;
+            font-size: .62rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+        }
+
+        .motion-scene-button:hover {
+            border-color: #a1a1aa;
+            color: #18181b;
+        }
+
+        .about-motion-control {
+            margin-top: .85rem;
+        }
+
+        .motion-wave-stage,
+        .motion-geometry-stage {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .motion-wave-stage {
+            height: 5.25rem;
+            margin: -2.6rem auto 2.5rem;
+            max-width: 44rem;
+        }
+
+        .motion-wave-stage canvas,
+        .motion-geometry-stage canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .motion-wave-stage button,
+        .motion-geometry-stage button {
+            position: relative;
+            z-index: 1;
+        }
+
+        .motion-geometry-stage {
+            height: 4.25rem;
+            max-width: 36rem;
+            margin: -2.3rem auto 2.75rem;
+        }
+
+        .motion-geometry-stage button {
+            position: absolute;
+            right: .25rem;
+            bottom: .2rem;
+        }
+
+        .motion-ticker {
+            position: relative;
+            z-index: 2;
+            height: 2.3rem;
+            overflow: hidden;
+            border-block: 1px solid rgba(113, 113, 122, .13);
+            background: rgba(244, 244, 245, .76);
+            color: #71717a;
+            font-size: .61rem;
+            font-weight: 600;
+            letter-spacing: .2em;
+            white-space: nowrap;
+        }
+
+        .motion-ticker-track {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            width: max-content;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .motion-ticker-track span:nth-child(even) {
+            color: #4f46e5;
+            opacity: .6;
+        }
+
+        .motion-observatory {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 4rem;
+            max-width: 54rem;
+            border: 1px solid rgba(161, 161, 170, .3);
+            background: linear-gradient(135deg, rgba(250, 250, 250, .94), rgba(244, 244, 245, .84));
+        }
+
+        .motion-observatory-canvas-wrap {
+            position: relative;
+            height: clamp(11rem, 30vw, 17rem);
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 50%, rgba(199, 210, 254, .35), rgba(250, 250, 250, .1) 55%, transparent 75%);
+        }
+
+        #cosmosCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: pan-y;
+            pointer-events: auto;
+        }
+
+        .motion-observatory-caption {
+            position: absolute;
+            left: 1rem;
+            bottom: .8rem;
+            z-index: 1;
+            color: #71717a;
+            font-size: .55rem;
+            letter-spacing: .15em;
+            pointer-events: none;
+        }
+
+        .motion-observatory-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: .8rem 1.25rem;
+            padding: 1rem 1.15rem;
+            border-top: 1px solid rgba(161, 161, 170, .25);
+        }
+
+        .motion-mode-group,
+        .motion-range-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: .4rem;
+        }
+
+        .motion-mode,
+        .motion-nova {
+            border: 1px solid #d4d4d8;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .86);
+            color: #52525b;
+            padding: .48rem .72rem;
+            font-size: .58rem;
+            letter-spacing: .08em;
+            cursor: pointer;
+        }
+
+        .motion-mode[aria-pressed="true"] {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        .motion-range-label {
+            display: grid;
+            grid-template-columns: auto 4rem;
+            align-items: center;
+            gap: .2rem .45rem;
+            color: #71717a;
+            font-size: .58rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .motion-range-label span {
+            grid-column: 1 / -1;
+        }
+
+        .motion-range {
+            width: 4rem;
+            accent-color: #6366f1;
+        }
+
+        .motion-state-message {
+            min-height: 1rem;
+            padding: 0 .2rem .45rem;
+            color: #71717a;
+            font-size: .65rem;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .motion-control { top: 5.15rem; padding: .55rem .85rem; font-size: .58rem; }
+            .motion-wave-stage { margin-top: -2.6rem; margin-bottom: 2.2rem; }
+            .motion-geometry-stage { margin-top: -2.3rem; margin-bottom: 2.5rem; }
+            .motion-observatory-controls { justify-content: center; }
+            .motion-mode-group { justify-content: center; }
+            .motion-range-group { justify-content: center; }
+            .motion-nova { flex: 0 0 auto; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto !important; }
+            .motion-control.is-ready { animation: none; }
+            body:not(.motion-opted-in) .floating,
+            body:not(.motion-opted-in) .hero-bg-shape,
+            body:not(.motion-opted-in) .nav-enter { animation: none !important; }
+            body:not(.motion-opted-in) *,
+            body:not(.motion-opted-in) *::before,
+            body:not(.motion-opted-in) *::after { scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 
 
 <body class="bg-zinc-50 font-sans text-zinc-800 antialiased selection:bg-zinc-200 selection:text-zinc-900">
+    <div id="portfolio-motion-layer" class="global-motion-layer" aria-hidden="true">
+        <canvas id="auroraCanvas"></canvas>
+        <canvas id="starsCanvas"></canvas>
+        <canvas id="cometsCanvas"></canvas>
+    </div>
     <!-- Navigation -->
     <nav id="main-nav" class="fixed w-full glass-nav z-50 transition-all duration-300 nav-enter">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -263,7 +665,7 @@
                     <a href="#contact" class="nav-link text-sm uppercase tracking-widest">Contact</a>
                 </div>
                 <div class="md:hidden flex items-center">
-                    <button id="menu-btn" class="text-zinc-800 transition-transform duration-300">
+                    <button id="menu-btn" class="text-zinc-800 transition-transform duration-300" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -282,9 +684,13 @@
         </div>
     </nav>
 
+    <button id="motion-control" class="motion-control is-ready" type="button" aria-controls="portfolio-motion-layer motionTicker planetCanvas bloomCanvas waveCanvas cubeCanvas cosmosCanvas" aria-pressed="false" aria-label="Activate animations">
+        Activate animations
+    </button>
+
     <!-- Hero Section -->
     <section id="home"
-        class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-16 max-w-8xl mx-auto">
         <!-- Background Shapes -->
         <div
             class="hero-bg-shape bg-zinc-200 w-96 h-96 top-0 left-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob">
@@ -312,7 +718,8 @@
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                <div class="w-72 h-72 md:w-96 md:h-96">
+                    <canvas id="planetCanvas" class="motion-overlay motion-scene-canvas hero-motion-stage" aria-hidden="true"></canvas>
                     <div class="absolute inset-0 bg-zinc-200 rounded-full blur-3xl opacity-20"></div>
                     <div id="three-container"
                         class="relative w-full h-full rounded-full border border-zinc-100 shadow-2xl floating overflow-hidden bg-white">
@@ -321,6 +728,13 @@
             </div>
         </div>
     </section>
+
+    <div id="motionTicker" class="motion-ticker" aria-hidden="true">
+        <div id="motionTickerTrack" class="motion-ticker-track">
+            <span>DATA &amp; AI</span><span>✳</span><span>MACHINE LEARNING</span><span>✳</span><span>PYTHON AUTOMATION</span><span>✳</span><span>COMPUTER VISION</span><span>✳</span><span>NETWORK SYSTEMS</span><span>✳</span>
+            <span>DATA &amp; AI</span><span>✳</span><span>MACHINE LEARNING</span><span>✳</span><span>PYTHON AUTOMATION</span><span>✳</span><span>COMPUTER VISION</span><span>✳</span><span>NETWORK SYSTEMS</span><span>✳</span>
+        </div>
+    </div>
 
     <!-- About Section -->
     <section id="about" class="py-24 bg-zinc-50 border-t border-zinc-100">
@@ -336,11 +750,13 @@
             <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">About Me</h2>
             <div class="flex flex-col md:flex-row items-center fade-in-section gap-16">
                 <div class="md:w-1/3 flex justify-center about-image-container">
-                    <div class="p-2 border border-zinc-200 bg-white shadow-sm">
+                    <div class="p-2 border border-zinc-200 bg-white shadow-sm about-art-frame">
+                        <canvas id="bloomCanvas" class="motion-overlay motion-scene-canvas" aria-hidden="true"></canvas>
                         <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
                             alt="About AI"
-                            class="w-64 h-64 object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                            class="relative z-10 w-64 h-64 object-cover filter grayscale hover:grayscale-0 transition duration-700">
                     </div>
+                    <button id="bloomBtn" class="motion-scene-button about-motion-control motion-overlay" type="button" aria-label="Evolve the bloom animation">Evolve bloom ↗</button>
                 </div>
                 <div class="md:w-2/3 about-content-container">
                     <h3 class="text-2xl font-medium mb-6 text-zinc-900 leading-snug">Bridging IT Experience with<br>AI
@@ -386,6 +802,10 @@
     <section id="skills" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Technical Skills</h2>
+            <div class="motion-wave-stage motion-overlay">
+                <canvas id="waveCanvas" class="motion-scene-canvas" aria-hidden="true"></canvas>
+                <button id="waveBtn" class="motion-scene-button" type="button" aria-pressed="false">Change wave energy ↗</button>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 fade-in-section">
                 <div>
                     <h3 class="text-xl font-medium mb-8 text-zinc-900 border-b border-zinc-100 pb-2">Machine Learning
@@ -525,6 +945,10 @@
     <section id="projects" class="py-24 bg-zinc-50 border-t border-zinc-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Featured Projects</h2>
+            <div class="motion-geometry-stage motion-overlay">
+                <canvas id="cubeCanvas" class="motion-scene-canvas" aria-hidden="true"></canvas>
+                <button id="cubeBtn" class="motion-scene-button" type="button" aria-pressed="false">Hold geometry ↗</button>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 fade-in-section">
                 <!-- Project 1 -->
                 <div class="bg-white border border-zinc-200 project-card overflow-hidden">
@@ -663,6 +1087,25 @@
     <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-16 tracking-tighter text-zinc-900">Get In Touch</h2>
+            <div class="motion-observatory motion-overlay" role="group" aria-label="Interactive particle animation controls">
+                <div class="motion-observatory-canvas-wrap">
+                    <canvas id="cosmosCanvas" class="motion-scene-canvas" role="img" aria-label="Interactive particle sculpture. Choose a mode, then move or tap to create ripples."></canvas>
+                    <span class="motion-observatory-caption">MOVE TO ATTRACT · TAP TO RELEASE</span>
+                </div>
+                <div class="motion-observatory-controls">
+                    <div class="motion-mode-group" role="group" aria-label="Particle choreography">
+                        <button class="motion-mode" type="button" data-mode="0" aria-pressed="true">Silk currents</button>
+                        <button class="motion-mode" type="button" data-mode="1" aria-pressed="false">Spiral galaxy</button>
+                        <button class="motion-mode" type="button" data-mode="2" aria-pressed="false">Magnetic flower</button>
+                    </div>
+                    <div class="motion-range-group">
+                        <label class="motion-range-label" for="energyRange"><span>Energy</span><input id="energyRange" class="motion-range" type="range" min="10" max="210" value="50" aria-label="Particle energy"></label>
+                        <label class="motion-range-label" for="densityRange"><span>Density</span><input id="densityRange" class="motion-range" type="range" min="500" max="2200" step="100" value="1600" aria-label="Particle density"></label>
+                    </div>
+                    <button id="novaBtn" class="motion-nova" type="button">Release a supernova ↗</button>
+                </div>
+                <div id="motionSceneStatus" class="motion-state-message" role="status" aria-live="polite"></div>
+            </div>
             <div class="flex flex-col items-center justify-center fade-in-section">
                 <div class="w-full md:w-2/3 lg:w-1/2 text-center mx-auto">
                     <h3 class="text-2xl font-medium mb-6 text-zinc-900">Let's Collaborate</h3>
@@ -805,6 +1248,8 @@
     </div>
 
     <script>
+        let portfolioMotionThree = null;
+
         // Mobile menu toggle
         document.getElementById('menu-btn').addEventListener('click', function () {
             const menu = document.getElementById('mobile-menu');
@@ -822,6 +1267,9 @@
                 icon.classList.add('fa-times');
                 this.classList.add('rotate-90');
             }
+            const isOpen = !menu.classList.contains('hidden');
+            this.setAttribute('aria-expanded', String(isOpen));
+            this.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
         });
 
         // Smooth scrolling for navigation links
@@ -830,7 +1278,7 @@
                 e.preventDefault();
 
                 const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                const targetElement = targetId && targetId !== '#' ? document.querySelector(targetId) : document.body;
 
                 if (targetElement) {
                     // Close mobile menu if open
@@ -840,7 +1288,7 @@
                     // Scroll to target
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
+                        behavior: document.body.classList.contains('motion-running') ? 'smooth' : 'auto'
                     });
                 }
             });
@@ -874,6 +1322,7 @@
         const bgShape1 = document.getElementById('parallax-shape-1');
 
         window.addEventListener('scroll', () => {
+            if (!document.body.classList.contains('motion-running')) return;
             const rect = aboutSect.getBoundingClientRect();
             const windowHeight = window.innerHeight;
 
@@ -911,16 +1360,21 @@
         // Initialize Three.js Scene
         const initThreeJS = () => {
             const container = document.getElementById('three-container');
-            if (!container) return;
+            if (!container || !window.THREE) return;
 
             // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 0.01, 10);
             camera.position.z = 2.5;
 
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            let renderer;
+            try {
+                renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+            } catch (error) {
+                return;
+            }
             renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
             container.appendChild(renderer.domElement);
 
             // Preload textures
@@ -980,68 +1434,61 @@
             let activeIndex = 0;
             let viewingFront = true;
             let isSpinning = false;
+            let spinElapsed = 0;
+            let idleElapsed = 0;
+            let startRotation = 0;
+            let endRotation = 0;
+            const duration = 1;
+            const draw = () => renderer.render(scene, camera);
 
-            const triggerSpin = () => {
-                if (isSpinning) return;
-                isSpinning = true;
-
-                const startRot = coin.rotation.x;
-                const endRot = startRot + Math.PI;
-                const duration = 1000;
-                const startTime = performance.now();
-
-                function spin(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    // Ease in-out cubic
-                    const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-                    coin.rotation.x = startRot + (endRot - startRot) * ease;
-
-                    if (progress < 1) {
-                        requestAnimationFrame(spin);
-                    } else {
-                        isSpinning = false;
-                        coin.rotation.x = endRot; // Ensure exact final rotation
-
-                        // Prep next image
-                        viewingFront = !viewingFront;
-                        activeIndex = (activeIndex + 1) % images.length;
-
-                        // The face currently HIDDEN needs the NEXT image (activeIndex + 1)
-                        const hiddenMatIndex = viewingFront ? 2 : 1;
-                        const nextImageIndex = (activeIndex + 1) % images.length;
-
-                        const nextTex = loadedTextures[nextImageIndex];
-                        // If assigning to Back Face (index 2), rotate it 180 relative to Base (PI/2). 
-                        // If Front, Base (PI/2).
-                        nextTex.rotation = (hiddenMatIndex === 2) ? (Math.PI / 2 + Math.PI) : (Math.PI / 2);
-
-                        materials[hiddenMatIndex].map = nextTex;
-                        materials[hiddenMatIndex].needsUpdate = true;
+            // The portfolio motion controller owns this scene's clock and pauses it in place.
+            portfolioMotionThree = {
+                draw,
+                update(dt) {
+                    idleElapsed += dt;
+                    if (!isSpinning && idleElapsed >= 3) {
+                        idleElapsed = 0;
+                        isSpinning = true;
+                        spinElapsed = 0;
+                        startRotation = coin.rotation.x;
+                        endRotation = startRotation + Math.PI;
                     }
+
+                    if (isSpinning) {
+                        spinElapsed += dt;
+                        const progress = Math.min(spinElapsed / duration, 1);
+                        const ease = progress < 0.5
+                            ? 4 * progress * progress * progress
+                            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                        coin.rotation.x = startRotation + (endRotation - startRotation) * ease;
+
+                        if (progress >= 1) {
+                            isSpinning = false;
+                            coin.rotation.x = endRotation;
+                            viewingFront = !viewingFront;
+                            activeIndex = (activeIndex + 1) % images.length;
+                            const hiddenMatIndex = viewingFront ? 2 : 1;
+                            const nextTex = loadedTextures[(activeIndex + 1) % images.length];
+                            nextTex.rotation = hiddenMatIndex === 2 ? Math.PI / 2 + Math.PI : Math.PI / 2;
+                            materials[hiddenMatIndex].map = nextTex;
+                            materials[hiddenMatIndex].needsUpdate = true;
+                        }
+                    }
+                    draw();
                 }
-                requestAnimationFrame(spin);
             };
-
-            // Start loop
-            setInterval(triggerSpin, 3000);
-
-            // Render loop
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-            animate();
+            draw();
 
             // Resize handler
             window.addEventListener('resize', () => {
                 if (!container) return;
                 const width = container.clientWidth;
                 const height = container.clientHeight;
+                if (!width || !height) return;
                 renderer.setSize(width, height);
                 camera.aspect = width / height;
                 camera.updateProjectionMatrix();
+                draw();
             });
         };
 
@@ -1054,7 +1501,11 @@
         const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+                    if (document.body.classList.contains('motion-running') && window.portfolioMotionReveal) {
+                        window.portfolioMotionReveal(entry.target);
+                    } else {
+                        entry.target.classList.add('is-visible');
+                    }
                     fadeObserver.unobserve(entry.target);
                 }
             });
@@ -1138,4 +1589,731 @@
         }
     </script>
 
+    <script>
+        (() => {
+            'use strict';
+
+            const body = document.body;
+            const motionButton = document.getElementById('motion-control');
+            const sceneStatus = document.getElementById('motionSceneStatus');
+            if (!motionButton) return;
+            document.getElementById('main-nav')?.addEventListener('animationend', event => {
+                if (event.animationName === 'slideDown') event.currentTarget.classList.remove('nav-enter');
+            });
+
+            const motion = {
+                phase: 'hidden',
+                optedIn: false,
+                running: false,
+                time: 0,
+                lastFrame: 0,
+                accumulator: 0,
+                frameId: 0,
+                frameCount: 0,
+                reducedQuery: window.matchMedia('(prefers-reduced-motion: reduce)')
+            };
+            const managedAnimations = new Set();
+            const revealByElement = new Map();
+            const cardTilts = [...document.querySelectorAll('.project-card')].map(element => ({ element, x: 0, y: 0, targetX: 0, targetY: 0 }));
+            const tau = Math.PI * 2;
+            const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+            const random = (min, max) => min + Math.random() * (max - min);
+            const mix = (a, b, t) => a + (b - a) * t;
+            const surface = (id, resolutionScale = 1) => {
+                const canvas = document.getElementById(id);
+                if (!canvas) return null;
+                let context = null;
+                try { context = canvas.getContext('2d', { alpha: true }); } catch (error) { context = null; }
+                return { id, canvas, context, width: 0, height: 0, resolutionScale, visible: true };
+            };
+
+            const surfaces = {
+                aurora: surface('auroraCanvas', .58),
+                stars: surface('starsCanvas', .8),
+                comets: surface('cometsCanvas', .8),
+                planet: surface('planetCanvas', .9),
+                bloom: surface('bloomCanvas', .9),
+                cube: surface('cubeCanvas', .9),
+                wave: surface('waveCanvas', .9),
+                cosmos: surface('cosmosCanvas', .85)
+            };
+            const sceneNames = ['planet', 'bloom', 'cube', 'wave', 'cosmos'];
+            const sceneByCanvas = new Map(sceneNames.map(name => [surfaces[name]?.canvas, surfaces[name]]));
+            const stars = [];
+            const comets = [];
+            const shocks = [];
+            const sparks = [];
+            let particles = [];
+            let particleMode = 0;
+            let particleEnergy = .8;
+            let particleDensity = 1600;
+            let particlePointer = { x: 0, y: 0, active: false };
+            let bloomShape = 0;
+            let geometryHeld = false;
+            let geometryTime = 0;
+            let waveFast = false;
+            let supernova = 0;
+            let resizeTimer = 0;
+
+            function fitSurface(item) {
+                if (!item || !item.context) return false;
+                const rect = item.canvas.getBoundingClientRect();
+                if (rect.width <= 0 || rect.height <= 0) return false;
+                item.width = rect.width;
+                item.height = rect.height;
+                const deviceScale = Math.min(window.devicePixelRatio || 1, innerWidth < 640 ? 1.15 : 1.45);
+                const scale = deviceScale * item.resolutionScale;
+                item.canvas.width = Math.max(1, Math.round(item.width * scale));
+                item.canvas.height = Math.max(1, Math.round(item.height * scale));
+                item.context.setTransform(scale, 0, 0, scale, 0, 0);
+                return true;
+            }
+
+            function fitAll() {
+                Object.values(surfaces).forEach(fitSurface);
+                resetStars();
+                if (surfaces.cosmos?.width > 1 && particles.length !== particleDensity) makeParticles(particleDensity);
+            }
+
+            function resetStars() {
+                const item = surfaces.stars;
+                if (!item || item.width <= 1 || item.height <= 1) return;
+                const count = Math.min(180, Math.max(45, Math.floor(innerWidth * innerHeight / 11000)));
+                stars.length = 0;
+                for (let i = 0; i < count; i++) {
+                    stars.push({ x: Math.random() * item.width, y: Math.random() * item.height, depth: random(.2, 1), seed: random(0, tau) });
+                }
+            }
+
+            function clear(item) {
+                if (item?.context && item.width > 0 && item.height > 0) item.context.clearRect(0, 0, item.width, item.height);
+            }
+
+            function drawAurora() {
+                const item = surfaces.aurora;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, w = item.width, h = item.height;
+                clear(item);
+                ctx.save();
+                ctx.globalCompositeOperation = 'screen';
+                for (let band = 0; band < 3; band++) {
+                    const base = h * (.08 + band * .065);
+                    const gradient = ctx.createLinearGradient(0, 0, 0, h * .42);
+                    gradient.addColorStop(0, 'rgba(67,56,202,0)');
+                    gradient.addColorStop(.38, band === 1 ? 'rgba(15,82,130,.075)' : 'rgba(67,56,202,.065)');
+                    gradient.addColorStop(1, 'rgba(67,56,202,0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    for (let x = 0; x <= w + 24; x += 24) {
+                        const y = base + Math.sin(x * .004 + motion.time * .22 + band) * h * .035 + Math.sin(x * .009 - motion.time * .12 + band * 2) * h * .018;
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.lineTo(w, 0);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            function drawStars(dt = 0) {
+                const item = surfaces.stars;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context;
+                clear(item);
+                for (const star of stars) {
+                    if (dt) {
+                        star.y += dt * (2 + star.depth * 9);
+                        if (star.y > item.height + 2) { star.y = -2; star.x = Math.random() * item.width; }
+                    }
+                    const pulse = .18 + .36 * (.5 + .5 * Math.sin(motion.time * (1 + star.depth) + star.seed));
+                    ctx.fillStyle = `rgba(67,56,202,${pulse * star.depth})`;
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, .45 + star.depth * 1.05, 0, tau);
+                    ctx.fill();
+                }
+            }
+
+            function drawTrails(dt = 0) {
+                const item = surfaces.comets;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context;
+                clear(item);
+                ctx.lineCap = 'round';
+                for (let i = comets.length - 1; i >= 0; i--) {
+                    const comet = comets[i];
+                    if (dt) comet.life -= dt * 1.5;
+                    if (comet.life <= 0) { comets.splice(i, 1); continue; }
+                    ctx.strokeStyle = `rgba(79,70,229,${comet.life * .26})`;
+                    ctx.lineWidth = .7 + comet.life * 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(comet.x, comet.y);
+                    ctx.lineTo(comet.px, comet.py);
+                    ctx.stroke();
+                    ctx.fillStyle = `rgba(14,116,144,${comet.life * .28})`;
+                    ctx.beginPath();
+                    ctx.arc(comet.x, comet.y, 1 + comet.life * 2, 0, tau);
+                    ctx.fill();
+                }
+                for (let i = shocks.length - 1; i >= 0; i--) {
+                    const ring = shocks[i];
+                    if (dt) { ring.radius += dt * 150; ring.life -= dt * .72; }
+                    if (ring.life <= 0) { shocks.splice(i, 1); continue; }
+                    ctx.strokeStyle = `rgba(99,102,241,${ring.life * .25})`;
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.ellipse(ring.x, ring.y, ring.radius, ring.radius * .68, -.2, 0, tau);
+                    ctx.stroke();
+                }
+                for (let i = sparks.length - 1; i >= 0; i--) {
+                    const spark = sparks[i];
+                    if (dt) {
+                        spark.life -= dt;
+                        spark.x += spark.vx * dt;
+                        spark.y += spark.vy * dt;
+                        spark.vx *= Math.pow(.97, dt * 60);
+                        spark.vy *= Math.pow(.97, dt * 60);
+                    }
+                    if (spark.life <= 0) { sparks.splice(i, 1); continue; }
+                    ctx.strokeStyle = `rgba(14,116,144,${spark.life * .46})`;
+                    ctx.beginPath();
+                    ctx.moveTo(spark.x, spark.y);
+                    ctx.lineTo(spark.x - spark.vx * .025, spark.y - spark.vy * .025);
+                    ctx.stroke();
+                }
+            }
+
+            function drawPlanet() {
+                const item = surfaces.planet;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, cx = item.width / 2, cy = item.height / 2;
+                const radius = Math.min(item.width, item.height) * .70;
+                clear(item);
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.strokeStyle = 'rgba(67,56,202,.31)';
+                ctx.lineWidth = 1;
+                for (let ring = 0; ring < 3; ring++) {
+                    ctx.save();
+                    ctx.rotate(-.38 + ring * .32 + motion.time * (ring === 1 ? -.025 : .018));
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, radius * (1.05 + ring * .18), radius * (.34 + ring * .05), 0, 0, tau);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+                const glow = ctx.createRadialGradient(-radius * .25, -radius * .28, 1, 0, 0, radius * .78);
+                glow.addColorStop(0, 'rgba(165,180,252,.16)');
+                glow.addColorStop(.55, 'rgba(67,56,202,.04)');
+                glow.addColorStop(1, 'rgba(67,56,202,0)');
+                ctx.fillStyle = glow;
+                ctx.beginPath(); ctx.arc(0, 0, radius * .78, 0, tau); ctx.fill();
+                for (let i = 0; i < 48; i++) {
+                    const a = i / 48 * tau + motion.time * (i % 2 ? .16 : -.12);
+                    const orbit = radius * (1.12 + .14 * Math.sin(i * 1.7));
+                    const x = Math.cos(a) * orbit;
+                    const y = Math.sin(a) * orbit * .39;
+                    ctx.fillStyle = i % 4 === 0 ? 'rgba(15,82,130,.78)' : 'rgba(67,56,202,.56)';
+                    ctx.beginPath(); ctx.arc(x, y, i % 5 === 0 ? 1.8 : .95, 0, tau); ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            function drawBloom() {
+                const item = surfaces.bloom;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, cx = item.width / 2, cy = item.height / 2;
+                const radius = Math.min(item.width, item.height) * .32;
+                const petals = 10 + bloomShape * 3;
+                clear(item);
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(motion.time * .08);
+                for (let i = 0; i < petals; i++) {
+                    ctx.save();
+                    ctx.rotate(i / petals * tau);
+                    ctx.beginPath();
+                    ctx.ellipse(0, -radius * .58, radius * (.24 + bloomShape * .012), radius * .58, 0, 0, tau);
+                    ctx.fillStyle = i % 2 ? 'rgba(14,116,144,.045)' : 'rgba(99,102,241,.05)';
+                    ctx.strokeStyle = i % 2 ? 'rgba(14,116,144,.34)' : 'rgba(99,102,241,.38)';
+                    ctx.lineWidth = 1;
+                    ctx.fill(); ctx.stroke();
+                    ctx.restore();
+                }
+                ctx.beginPath(); ctx.arc(0, 0, 3 + bloomShape, 0, tau);
+                ctx.fillStyle = 'rgba(79,70,229,.58)'; ctx.fill();
+                ctx.restore();
+            }
+
+            function rotate4(point, a, b, angle) {
+                const cos = Math.cos(angle), sin = Math.sin(angle);
+                const next = point.slice();
+                next[a] = point[a] * cos - point[b] * sin;
+                next[b] = point[a] * sin + point[b] * cos;
+                return next;
+            }
+
+            function drawCube() {
+                const item = surfaces.cube;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, cx = item.width / 2, cy = item.height / 2;
+                const angle = geometryTime;
+                clear(item);
+                const points = [];
+                for (let bits = 0; bits < 16; bits++) {
+                    let v = [bits & 1 ? 1 : -1, bits & 2 ? 1 : -1, bits & 4 ? 1 : -1, bits & 8 ? 1 : -1];
+                    v = rotate4(v, 0, 3, angle * .31);
+                    v = rotate4(v, 1, 2, angle * .23);
+                    v = rotate4(v, 0, 1, angle * .12);
+                    const wScale = 2.8 / (2.8 - v[3] * .36);
+                    const x3 = v[0] * wScale, y3 = v[1] * wScale, z3 = v[2] * wScale;
+                    const depth = 2.8 / (2.8 - z3 * .28);
+                    const scale = Math.min(item.width, item.height) * .27;
+                    points.push({ x: cx + x3 * depth * scale, y: cy + y3 * depth * scale, depth });
+                }
+                ctx.lineWidth = 1;
+                for (let a = 0; a < 16; a++) {
+                    for (let b = a + 1; b < 16; b++) {
+                        const diff = a ^ b;
+                        if ((diff & (diff - 1)) !== 0) continue;
+                        const p = points[a], q = points[b];
+                        ctx.strokeStyle = `rgba(79,70,229,${.15 + Math.max(p.depth, q.depth) * .22})`;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+                    }
+                }
+                for (const p of points) {
+                    ctx.fillStyle = 'rgba(14,116,144,.55)';
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, tau); ctx.fill();
+                }
+            }
+
+            function drawWave() {
+                const item = surfaces.wave;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, w = item.width, h = item.height;
+                clear(item);
+                const count = Math.max(28, Math.min(76, Math.floor(w / 12)));
+                const gap = w / count;
+                const speed = waveFast ? 2.2 : .72;
+                for (let i = 0; i < count; i++) {
+                    const wave = Math.sin(i * .32 + motion.time * speed) * .5 + Math.sin(i * .12 - motion.time * speed * .55) * .28;
+                    const barHeight = h * (.18 + Math.abs(wave) * .62);
+                    const x = i * gap + gap * .38;
+                    const y = (h - barHeight) / 2;
+                    const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
+                    grad.addColorStop(0, 'rgba(99,102,241,.58)');
+                    grad.addColorStop(1, 'rgba(14,116,144,.38)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.roundRect(x, y, Math.max(2, gap * .24), barHeight, 4);
+                    ctx.fill();
+                }
+            }
+
+            function particleTarget(p, mode = particleMode) {
+                const item = surfaces.cosmos;
+                const cx = item.width / 2, cy = item.height / 2;
+                const radius = Math.min(item.width, item.height) * .43;
+                let angle = p.angle + motion.time * .12;
+                let r = radius * (.12 + p.radius * 1.8);
+                if (mode === 1) {
+                    angle = p.angle * 2.2 + p.arm * (tau / 3) + motion.time * .12 + p.radius * 6.5;
+                    r = radius * (.12 + p.radius * 1.6);
+                } else if (mode === 2) {
+                    angle = p.angle + motion.time * .045;
+                    r = radius * (.38 + .48 * Math.cos(p.angle * 6 + motion.time * .08)) * (.45 + p.radius * 1.4);
+                } else {
+                    angle += Math.sin(motion.time * .32 + p.angle * 3) * .12;
+                    r *= .75 + .22 * Math.sin(p.angle * 4 + motion.time * .2);
+                }
+                return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r * .72 };
+            }
+
+            function makeParticles(count) {
+                const item = surfaces.cosmos;
+                if (!item || item.width <= 1 || item.height <= 1) { particles = []; return; }
+                particleDensity = clamp(count, 500, 2400);
+                particles = Array.from({ length: particleDensity }, () => {
+                    const p = { angle: random(0, tau), radius: Math.sqrt(Math.random()), arm: Math.floor(Math.random() * 3), x: 0, y: 0, vx: 0, vy: 0 };
+                    const target = particleTarget(p);
+                    p.x = target.x; p.y = target.y;
+                    return p;
+                });
+            }
+
+            function drawCosmos(dt = 0, settle = false) {
+                const item = surfaces.cosmos;
+                if (!item?.context || item.width <= 1 || item.height <= 1) return;
+                const ctx = item.context, cx = item.width / 2, cy = item.height / 2;
+                clear(item);
+                if (particles.length !== particleDensity) makeParticles(particleDensity);
+                ctx.lineCap = 'round';
+                for (const p of particles) {
+                    const target = particleTarget(p);
+                    const oldX = p.x, oldY = p.y;
+                    if (settle) {
+                        p.x = target.x; p.y = target.y; p.vx = p.vy = 0;
+                    } else if (dt > 0) {
+                        const step = Math.min(dt * 60, 2.2);
+                        p.vx += (target.x - p.x) * .0019 * particleEnergy * step;
+                        p.vy += (target.y - p.y) * .0019 * particleEnergy * step;
+                        if (particlePointer.active) {
+                            const dx = particlePointer.x - p.x, dy = particlePointer.y - p.y;
+                            const dist2 = dx * dx + dy * dy + 1200;
+                            const force = 240 / dist2;
+                            p.vx += dx * force * step;
+                            p.vy += dy * force * step;
+                        }
+                        if (supernova > .02) {
+                            const dx = p.x - cx, dy = p.y - cy, distance = Math.hypot(dx, dy) + 1;
+                            p.vx += dx / distance * supernova * .22 * step;
+                            p.vy += dy / distance * supernova * .22 * step;
+                        }
+                        p.vx *= Math.pow(.965, step); p.vy *= Math.pow(.965, step);
+                        p.x += p.vx * step; p.y += p.vy * step;
+                        if (!Number.isFinite(p.x + p.y) || Math.abs(p.x - cx) > item.width * 2 || Math.abs(p.y - cy) > item.height * 2) {
+                            p.x = target.x; p.y = target.y; p.vx = p.vy = 0;
+                        }
+                    }
+                    const hue = particleMode === 1 ? '15,82,130' : particleMode === 2 ? '55,48,163' : '67,56,202';
+                    if (dt > 0) {
+                        ctx.strokeStyle = `rgba(${hue},${.28 + p.radius * .24})`;
+                        ctx.lineWidth = .7 + p.radius * .35;
+                        ctx.beginPath();
+                        ctx.moveTo(oldX, oldY);
+                        ctx.lineTo(p.x, p.y);
+                        ctx.stroke();
+                    }
+                    ctx.fillStyle = `rgba(${hue},${.42 + p.radius * .26})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, .7 + p.radius * .1, 0, tau);
+                    ctx.fill();
+                }
+                if (supernova > .02) {
+                    const radius = (1 - supernova / 3.5) * Math.min(item.width, item.height) * .55;
+                    ctx.strokeStyle = `rgba(99,102,241,${Math.min(.4, supernova * .14)})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.arc(cx, cy, Math.max(2, radius), 0, tau); ctx.stroke();
+                }
+            }
+
+            function drawScene(name, dt = 0) {
+                if (name === 'planet') drawPlanet();
+                else if (name === 'bloom') drawBloom();
+                else if (name === 'cube') drawCube();
+                else if (name === 'wave') drawWave();
+                else if (name === 'cosmos') drawCosmos(dt);
+            }
+
+            function drawStaticFrame(settleParticles = false) {
+                drawAurora();
+                drawStars();
+                drawTrails();
+                sceneNames.forEach(name => {
+                    if (name === 'cosmos') drawCosmos(0, settleParticles);
+                    else drawScene(name);
+                });
+                portfolioMotionThree?.draw();
+            }
+
+            function syncWebAnimations(shouldRun) {
+                if (motion.phase === 'hidden') {
+                    for (const animation of managedAnimations) {
+                        const element = animation.effect?.target;
+                        if (element) element.classList.add('is-visible');
+                        try { animation.finish(); animation.cancel(); } catch (error) { /* Already finished or detached. */ }
+                    }
+                    managedAnimations.clear();
+                    revealByElement.clear();
+                    return;
+                }
+                for (const animation of managedAnimations) {
+                    try { shouldRun ? animation.play() : animation.pause(); } catch (error) { /* Ignore detached reveal targets. */ }
+                }
+            }
+
+            window.portfolioMotionReveal = element => {
+                if (motion.phase !== 'running' || document.hidden || typeof element.animate !== 'function') {
+                    element.classList.add('is-visible');
+                    return;
+                }
+                if (revealByElement.has(element)) return;
+                const animation = element.animate(
+                    [
+                        { opacity: .15, transform: 'translateY(24px)', filter: 'blur(5px)' },
+                        { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }
+                    ],
+                    { duration: 850, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' }
+                );
+                managedAnimations.add(animation);
+                revealByElement.set(element, animation);
+                animation.addEventListener('finish', () => {
+                    element.classList.add('is-visible');
+                    managedAnimations.delete(animation);
+                    revealByElement.delete(element);
+                    animation.cancel();
+                }, { once: true });
+            };
+
+            function updateMotionControl() {
+                const labels = {
+                    hidden: 'Activate animations',
+                    running: 'Pause animations',
+                    paused: 'Hide animations'
+                };
+                const label = labels[motion.phase];
+                motionButton.textContent = label;
+                motionButton.setAttribute('aria-label', label);
+                motionButton.setAttribute('aria-pressed', String(motion.phase !== 'hidden'));
+                motionButton.title = motion.phase === 'hidden'
+                    ? (motion.reducedQuery.matches ? 'Activate motion on this page, even with reduced motion enabled.' : 'Show and play the portfolio animations.')
+                    : motion.phase === 'running' ? 'Pause the animations on their current frames.' : 'Hide the visible animations.';
+                motionButton.classList.toggle('is-ready', motion.phase === 'hidden');
+                body.classList.toggle('motion-visible', motion.phase !== 'hidden');
+                body.classList.toggle('motion-opted-in', motion.optedIn);
+                body.dataset.motionState = motion.phase;
+                if (sceneStatus) {
+                    sceneStatus.textContent = motion.phase === 'running'
+                        ? 'Motion active · move or tap to shape the particles.'
+                        : motion.phase === 'paused' ? 'Motion paused · the scenes are held on this frame.' : '';
+                }
+            }
+
+            function frame(timestamp) {
+                if (!motion.running || document.hidden) return;
+                const elapsed = motion.lastFrame ? Math.min((timestamp - motion.lastFrame) / 1000, .05) : 1 / 60;
+                motion.lastFrame = timestamp;
+                motion.time += elapsed;
+                motion.accumulator += elapsed;
+                const drawInterval = innerWidth < 640 ? 1 / 30 : 1 / 45;
+                if (motion.accumulator >= drawInterval) {
+                    const dt = motion.accumulator;
+                    motion.accumulator = 0;
+                    motion.frameCount++;
+                    drawAurora();
+                    drawStars(dt);
+                    drawTrails(dt);
+                    for (const name of sceneNames) {
+                        if (surfaces[name]?.visible) {
+                            if (name === 'cube' && !geometryHeld) geometryTime += dt;
+                            drawScene(name, dt);
+                        }
+                    }
+                    if (surfaces.planet?.visible) portfolioMotionThree?.update(dt);
+                    const easing = 1 - Math.exp(-dt * 8);
+                    for (const tilt of cardTilts) {
+                        tilt.x = mix(tilt.x, tilt.targetX, easing);
+                        tilt.y = mix(tilt.y, tilt.targetY, easing);
+                        tilt.element.style.setProperty('--motion-tilt-x', `${tilt.x.toFixed(2)}deg`);
+                        tilt.element.style.setProperty('--motion-tilt-y', `${tilt.y.toFixed(2)}deg`);
+                    }
+                    supernova *= Math.exp(-dt * 1.7);
+                    const tickerTrack = document.getElementById('motionTickerTrack');
+                    if (tickerTrack) tickerTrack.style.transform = `translateX(${-(motion.time * 28 % Math.max(1, tickerTrack.scrollWidth / 2))}px)`;
+                }
+                motion.frameId = requestAnimationFrame(frame);
+            }
+
+            function syncMotion() {
+                const shouldRun = motion.phase === 'running' && !document.hidden;
+                motion.running = shouldRun;
+                body.classList.toggle('motion-running', shouldRun);
+                syncWebAnimations(shouldRun);
+                updateMotionControl();
+                if (shouldRun) {
+                    fitAll();
+                    if (particles.length !== particleDensity) makeParticles(particleDensity);
+                    drawStaticFrame();
+                    if (!motion.frameId) { motion.lastFrame = 0; motion.frameId = requestAnimationFrame(frame); }
+                } else {
+                    if (motion.frameId) cancelAnimationFrame(motion.frameId);
+                    motion.frameId = 0;
+                    if (motion.phase === 'paused') drawStaticFrame();
+                    else portfolioMotionThree?.draw();
+                }
+            }
+
+            motionButton.addEventListener('click', () => {
+                if (motion.phase === 'hidden') {
+                    motion.phase = 'running';
+                    motion.optedIn = true;
+                } else if (motion.phase === 'running') {
+                    motion.phase = 'paused';
+                } else {
+                    motion.phase = 'hidden';
+                }
+                syncMotion();
+            });
+
+            const bloomButton = document.getElementById('bloomBtn');
+            bloomButton?.addEventListener('click', () => {
+                bloomShape = (bloomShape + 1) % 4;
+                if (!motion.running) drawBloom();
+            });
+
+            const cubeButton = document.getElementById('cubeBtn');
+            cubeButton?.addEventListener('click', () => {
+                geometryHeld = !geometryHeld;
+                cubeButton.textContent = geometryHeld ? 'Let geometry move ↗' : 'Hold geometry ↗';
+                cubeButton.setAttribute('aria-pressed', String(geometryHeld));
+            });
+
+            const waveButton = document.getElementById('waveBtn');
+            waveButton?.addEventListener('click', () => {
+                waveFast = !waveFast;
+                waveButton.textContent = waveFast ? 'Take it slow ↗' : 'Change wave energy ↗';
+                waveButton.setAttribute('aria-pressed', String(waveFast));
+                if (!motion.running) drawWave();
+            });
+
+            document.querySelectorAll('.motion-mode[data-mode]').forEach(button => {
+                button.addEventListener('click', () => {
+                    particleMode = Number(button.dataset.mode) || 0;
+                    document.querySelectorAll('.motion-mode[data-mode]').forEach(modeButton => {
+                        modeButton.setAttribute('aria-pressed', String(modeButton === button));
+                    });
+                    if (!motion.running) drawCosmos(0, true);
+                });
+            });
+
+            const energyRange = document.getElementById('energyRange');
+            energyRange?.addEventListener('input', event => { particleEnergy = Number(event.target.value) / 100; });
+            const densityRange = document.getElementById('densityRange');
+            densityRange?.addEventListener('input', event => {
+                particleDensity = Number(event.target.value);
+                makeParticles(particleDensity);
+                if (!motion.running) drawCosmos(0, true);
+            });
+
+            const novaButton = document.getElementById('novaBtn');
+            novaButton?.addEventListener('click', () => {
+                if (!motion.running) {
+                    if (sceneStatus) sceneStatus.textContent = 'Activate animations to release a supernova.';
+                    return;
+                }
+                supernova = 3.5;
+                const rect = surfaces.cosmos.canvas.getBoundingClientRect();
+                shocks.push({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, radius: 2, life: 1 });
+                for (let i = 0; i < 42; i++) {
+                    const angle = Math.random() * tau, speed = random(45, 145);
+                    sparks.push({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 1 });
+                }
+            });
+
+            function addShock(x, y) {
+                if (!motion.running) return;
+                shocks.push({ x, y, radius: 2, life: 1 });
+                if (shocks.length > 8) shocks.shift();
+                for (let i = 0; i < 20; i++) {
+                    const angle = Math.random() * tau, speed = random(30, 105);
+                    sparks.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 1 });
+                }
+                if (sparks.length > 180) sparks.splice(0, sparks.length - 180);
+            }
+
+            for (const tilt of cardTilts) {
+                tilt.element.addEventListener('pointermove', event => {
+                    if (!motion.running || event.pointerType === 'touch') return;
+                    const rect = tilt.element.getBoundingClientRect();
+                    tilt.targetX = ((event.clientY - rect.top) / rect.height - .5) * -7;
+                    tilt.targetY = ((event.clientX - rect.left) / rect.width - .5) * 7;
+                });
+                tilt.element.addEventListener('pointerleave', () => { tilt.targetX = 0; tilt.targetY = 0; });
+                tilt.element.addEventListener('pointerdown', event => {
+                    if (!motion.running || event.pointerType !== 'touch') return;
+                    const rect = tilt.element.getBoundingClientRect();
+                    tilt.targetX = ((event.clientY - rect.top) / rect.height - .5) * -5;
+                    tilt.targetY = ((event.clientX - rect.left) / rect.width - .5) * 5;
+                    setTimeout(() => { tilt.targetX = 0; tilt.targetY = 0; }, 320);
+                });
+            }
+
+            window.addEventListener('pointermove', event => {
+                const rect = surfaces.cosmos.canvas.getBoundingClientRect();
+                particlePointer.active = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+                if (particlePointer.active) { particlePointer.x = event.clientX - rect.left; particlePointer.y = event.clientY - rect.top; }
+                if (!motion.running || event.pointerType === 'touch') return;
+                const last = comets[comets.length - 1];
+                if (last && Math.hypot(event.clientX - last.x, event.clientY - last.y) < 5) return;
+                comets.push({ x: event.clientX, y: event.clientY, px: last?.x ?? event.clientX, py: last?.y ?? event.clientY, life: 1 });
+                if (comets.length > 42) comets.shift();
+            }, { passive: true });
+
+            window.addEventListener('pointerout', event => {
+                if (!event.relatedTarget) particlePointer.active = false;
+            });
+            window.addEventListener('pointercancel', () => { particlePointer.active = false; });
+            window.addEventListener('pointerdown', event => {
+                if (!motion.running || event.target.closest('button,a,input')) return;
+                addShock(event.clientX, event.clientY);
+                const rect = surfaces.cosmos.canvas.getBoundingClientRect();
+                if (event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom) {
+                    particlePointer = { x: event.clientX - rect.left, y: event.clientY - rect.top, active: true };
+                    for (const p of particles) {
+                        const dx = p.x - particlePointer.x, dy = p.y - particlePointer.y;
+                        const distance = Math.hypot(dx, dy) + 5;
+                        const force = 260 / (distance + 20);
+                        p.vx += dx / distance * force;
+                        p.vy += dy / distance * force;
+                    }
+                }
+            });
+
+            const sceneObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+                for (const entry of entries) {
+                    const item = sceneByCanvas.get(entry.target);
+                    if (!item) continue;
+                    item.visible = entry.isIntersecting;
+                    if (entry.isIntersecting && motion.phase !== 'hidden') {
+                        fitSurface(item);
+                        if (item.id === 'cosmos' && particles.length !== particleDensity) makeParticles(particleDensity);
+                        drawScene(item.id);
+                    }
+                }
+            }, { rootMargin: '100px' }) : null;
+            motion.sceneObserver = sceneObserver;
+            sceneNames.forEach(name => { if (sceneObserver && surfaces[name]) sceneObserver.observe(surfaces[name].canvas); });
+
+            function scheduleResize() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    fitAll();
+                    if (motion.phase !== 'hidden') drawStaticFrame();
+                    if (portfolioMotionThree) portfolioMotionThree.draw();
+                }, 120);
+            }
+            window.addEventListener('resize', scheduleResize, { passive: true });
+            if ('ResizeObserver' in window) {
+                motion.resizeObserver = new ResizeObserver(scheduleResize);
+                sceneNames.forEach(name => {
+                    const canvas = surfaces[name]?.canvas;
+                    if (canvas?.parentElement) motion.resizeObserver.observe(canvas.parentElement);
+                });
+                const hero = surfaces.planet?.canvas?.parentElement;
+                if (hero) motion.resizeObserver.observe(hero);
+            }
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    motion.running = false;
+                    body.classList.remove('motion-running');
+                    syncWebAnimations(false);
+                    if (motion.frameId) cancelAnimationFrame(motion.frameId);
+                    motion.frameId = 0;
+                } else {
+                    syncMotion();
+                }
+            });
+
+            motion.reducedQuery.addEventListener?.('change', () => {
+                body.dataset.motionPreference = motion.reducedQuery.matches ? 'reduced' : 'full';
+            });
+
+            fitAll();
+            body.dataset.motionPreference = motion.reducedQuery.matches ? 'reduced' : 'full';
+            updateMotionControl();
+            drawStaticFrame(true);
+        })();
+    </script>
+
+</body>
 </html>
